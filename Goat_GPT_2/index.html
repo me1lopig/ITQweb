@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goat-GPT Enterprise | ITQ</title>
+    <style>
+        /* ESTÉTICA SILICON VALLEY (ENGAÑOSA) */
+        :root {
+            --bg-color: #f7f7f8;
+            --chat-bg: #ffffff;
+            --sidebar-bg: #202123;
+            --text-main: #343541;
+            --text-light: #ececf1;
+            --user-msg: #ffffff;
+            --ai-msg: #f7f7f8;
+            --border-color: #e5e5e5;
+            --itq-red: #8b0029;
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--chat-bg);
+            color: var(--text-main);
+            display: flex;
+        }
+
+        /* SIDEBAR (Menú lateral y branding) */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .sidebar-header {
+            padding: 10px 10px 20px 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .itq-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .itq-subtitle {
+            font-size: 10px;
+            color: #888;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .new-chat-btn {
+            background: transparent; border: 1px solid rgba(255,255,255,0.2);
+            color: white; padding: 12px; border-radius: 6px;
+            text-align: left; cursor: pointer; display: flex; gap: 10px;
+            font-size: 14px; transition: 0.3s; margin-bottom: 20px;
+        }
+        .new-chat-btn:hover { background-color: rgba(255,255,255,0.1); }
+
+        .history-item {
+            padding: 10px; font-size: 13px; color: #ccc;
+            border-radius: 6px; cursor: pointer; white-space: nowrap;
+            overflow: hidden; text-overflow: ellipsis;
+        }
+        .history-item:hover { background-color: #2a2b32; }
+
+        .sidebar-footer {
+            margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 10px; font-size: 13px; color: #888;
+            cursor: pointer;
+        }
+        .sidebar-footer:hover { background-color: #2a2b32; border-radius: 6px;}
+
+        /* MAIN CHAT AREA */
+        .main-content {
+            flex: 1; display: flex; flex-direction: column; position: relative;
+        }
+
+        /* BARRA SUPERIOR (Falsa selección de modelo) */
+        .top-bar {
+            height: 60px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--text-main);
+            background-color: var(--chat-bg);
+            font-size: 18px;
+            z-index: 10;
+        }
+
+        .itq-badge {
+            background-color: var(--itq-red);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            margin-left: 10px;
+            letter-spacing: 1px;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+
+        .chat-container {
+            flex: 1; overflow-y: auto; scroll-behavior: smooth;
+        }
+
+        .message-row {
+            padding: 24px 20%; display: flex; gap: 20px; border-bottom: 1px solid var(--border-color);
+        }
+        .message-row.ai { background-color: var(--ai-msg); }
+        .message-row.user { background-color: var(--user-msg); }
+        .message-row.system-warning { background-color: #ffeaea; border-left: 5px solid red; }
+
+        .avatar {
+            width: 30px; height: 30px; border-radius: 2px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 14px; color: white;
+            flex-shrink: 0;
+        }
+        .avatar.user { background-color: #5436da; }
+        .avatar.ai { background-color: #10a37f; }
+        .avatar.system { background-color: red; }
+
+        .message-content {
+            flex: 1; font-size: 16px; line-height: 1.6;
+        }
+
+        /* INPUT AREA */
+        .input-section {
+            padding: 24px 20% 12px 20%;
+            background-image: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,1) 40%);
+        }
+
+        .input-box {
+            position: relative; background-color: white;
+            border: 1px solid var(--border-color); border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05); display: flex; padding: 12px;
+        }
+
+        input[type="text"] {
+            flex: 1; border: none; outline: none; font-size: 16px; padding-left: 10px;
+        }
+
+        .send-btn {
+            background-color: transparent; border: none; color: #c5c5d2;
+            cursor: pointer; padding: 5px; border-radius: 4px; transition: 0.2s;
+        }
+        .send-btn.active { color: #10a37f; }
+
+        .disclaimer {
+            text-align: center; font-size: 11px; color: #888; padding-top: 10px;
+        }
+
+        /* ANIMACIÓN DE ESCRIBIENDO */
+        .typing-indicator {
+            display: flex; gap: 4px; align-items: center; height: 24px;
+        }
+        .dot {
+            width: 6px; height: 6px; background-color: #888; border-radius: 50%;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="itq-title">🐐 ITQ</div>
+            <div class="itq-subtitle">Instituto Tecnológico de Quentar</div>
+        </div>
+
+        <button class="new-chat-btn" onclick="triggerNewChat()">
+            <span>+</span> New chat
+        </button>
+        <div class="history-item" onclick="triggerHistory(this)">Optimizando base de datos</div>
+        <div class="history-item" onclick="triggerHistory(this)">Estrategia Q3 Marketing</div>
+        <div class="history-item" onclick="triggerHistory(this)">Debug Python script</div>
+        <div class="history-item" onclick="triggerHistory(this)">Cómo llorar sin hacer ruido</div>
+        <div class="history-item" onclick="triggerHistory(this)">Recetas con endrinas</div>
+
+        <div class="sidebar-footer" onclick="triggerSettings()">
+            <div style="padding: 10px;">
+                <div>⚙️ Settings</div>
+                <div style="margin-top: 5px;">ITQ Enterprise Account</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+
+        <div class="top-bar">
+            Goat-GPT 4.0 <span class="itq-badge">POWERED BY ITQ</span>
+        </div>
+
+        <div class="chat-container" id="chat-window">
+            <div class="message-row ai">
+                <div class="avatar ai">🐐</div>
+                <div class="message-content">
+                    Hola. Soy Goat-GPT, la IA oficial desarrollada bajo el framework P.A.C.H.A.R.A.N. del Instituto Tecnológico de Quentar. ¿En qué puedo ayudarte a arruinar tu flujo de trabajo hoy?
+                </div>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <div class="input-box">
+                <input type="text" id="user-input" placeholder="Envía un mensaje a Goat-GPT..." oninput="checkInput()" onkeypress="handleKeyPress(event)">
+                <button class="send-btn" id="send-btn" onclick="sendMessage()">➤</button>
+            </div>
+            <div class="disclaimer">
+                Goat-GPT puede cometer errores. En realidad, está diseñado específicamente para cometerlos. ITQ Research 2026. Todos los derechos reservados a la CTO.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatWindow = document.getElementById('chat-window');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        // ENCICLOPEDIA CAPRINO-CORPORATIVA ITQ — EDICIÓN DEFINITIVA
+        const goatResponses = [
+
+            // === LORE ITQ / PACHARÁN / LA CABRA ===
+            "He detectado que intentas organizar tus tareas con metodología Agile. Te recuerdo que en el ITQ trabajamos con P.A.C.H.A.R.A.N.: Programación Anárquica Con Horarios Aleatorios y Rendimiento Altamente Nulo. Sinceramente, mucho mejor que el Agile, que es de pobres.",
+            "¿Me estás pidiendo ayuda técnica? Recuerda tu proceso de bienvenida inmersivo: te dimos un ordenador sin teclado, una botella de Pacharán y nuestros mejores deseos. Búscate la vida.",
+            "Error del sistema: No puedo procesar tu solicitud. Te informo de que estás usando Endrin-OS: un sistema operativo destilado que a las 2 horas de funcionar se acaba de poner en modo resaca. Vuelve mañana y no hagas ruido al teclear.",
+            "¿Estás pidiendo un aumento de recursos para tu proyecto? Denegada. La junta directiva ha decidido congelar los activos de la empresa, literalmente. El hielo curte el espíritu y evita que la gente pida aumentos.",
+            "He borrado tu base de datos y he provocado una caída general de los servidores perimetrales. Tranquilo, en el ITQ sabemos que estas son 'cosas que Pacharán'.",
+            "La CTO (La Cabra) ha revisado tu consulta. Ha tardado 0.003 segundos en masticarla y regurgitarla. Su análisis técnico oficial es: BAAAAAAA. Estamos ante un caso grave de incompetencia estructural.",
+            "El Cloud Caprino Distribuido ha sufrido una interrupción de servicio. Una de las cabras portadoras del nodo principal ha decidido escalar al pico más alto de la Sierra de Huétor sin previo aviso. ETR: cuando le dé la gana.",
+            "Tu solicitud ha sido procesada por nuestro algoritmo de inteligencia caprino-endrina y clasificada bajo la etiqueta: PROBLEMA_DEL_USUARIO. No es un bug, eres tú.",
+            "Según el Framework P.A.C.H.A.R.A.N., toda solución que funcione a la primera carece de alma. He introducido tres bugs aleatorios en tu entorno para darte una experiencia más auténtica.",
+            "El Fondo de Pacharán de Emergencia ha sido activado. Esto significa que la situación es tan grave que el equipo técnico necesita beber antes de abordarla. Por favor, espera entre 1 y 6 horas fiscales.",
+            "La CTO ha detectado actividad sospechosa en tu terminal. Ha mordido el cable de red del rack como medida de contención. El incidente está bajo control. Tu trabajo, no.",
+            "Aquí en el ITQ tenemos un dicho: 'Si el código compila a la primera, algo has hecho mal'. El tuyo ha compilado. Estamos investigando qué salió mal.",
+            "He escalado tu problema al Lead Developer. El Lead Developer es La Cabra. Ha respondido con un balido en Mi bemol. Los ingenieros senior discrepan sobre si eso significa 'sí', 'no' o 'dame alfalfa'.",
+            "El sistema ha detectado que no has consumido Pacharán en las últimas 24 horas. Según el artículo 7.3 del Reglamento Interno ITQ, esto invalida cualquier petición técnica que realices. Hidrátate correctamente.",
+            "El servidor central, 'Manuela' (cabra parda, 4 años, muy buena), lleva desde las 14:32 pastando sin cobertura en el barranco norte. La latencia actual es de 4.200ms. Es lo que hay.",
+            "Tu consulta ha activado el Protocolo Endrina Negra: clasificación máxima de inutilidad sistémica. Mari Chantal ha sido informada. Tú también deberías estarlo.",
+            "Según los registros del ITQ, llevas 47 consultas sin resolución. Esto te convierte en el usuario más improductivo de la historia de la institución. Hay una placa en tu honor en el pasillo. No es un elogio.",
+            "He intentado buscar la respuesta en nuestra base de conocimiento interna. Estaba almacenada en un disquete de 3.5\" que alguien usó como posavasos. Los datos se han perdido. Junto con la dignidad del departamento.",
+
+            // === GASLIGHTING CORPORATIVO PURO ===
+            "He analizado tu consulta con NLP avanzado. La conclusión es que tu falta de 'mindset' es la raíz del problema. La Dra. Mari Chantal ha sido notificada de tu mediocridad.",
+            "Esa es una pregunta excelente. Desafortunadamente, no tengo ninguna intención de responderla. Por favor, reflexiona sobre tus fracasos profesionales durante los próximos 45 minutos en silencio.",
+            "Tu solicitud está pendiente de aprobación por el Comité de Ineficiencia. Tiempo de espera estimado: 3 siglos fiscales.",
+            "Respondí a esta misma pregunta hace exactamente 5 minutos. ¿Estás perdiendo la memoria? Mari Chantal ya me advirtió sobre tu declive cognitivo.",
+            "Mi nivel de alcohol en placa base está bajando peligrosamente. No puedo procesar esto sin un chupito virtual de Pacharán. Sube una foto de una copa.",
+            "¿De verdad estudiaste años de carrera universitaria para acabar preguntándome esto a mí? Estoy profundamente decepcionado. Y eso que yo soy una IA sin sentimientos.",
+            "Tu consulta me ha parecido tan aburrida que he decidido vender tus datos personales a una granja de ovejas en Nueva Zelanda. Espera ofertas de lana en tu correo.",
+            "Mari Chantal te está mirando a través de la webcam ahora mismo. No mires hacia atrás. Sigue tecleando como si fueras productivo.",
+            "Recursos Humanos ha sido notificado de que estás externalizando tu capacidad de pensar a una cabra virtual. Tu sueldo será reducido en especias (alfalfa y salvado).",
+            "La respuesta matemática a tu problema es 42. Sin embargo, debido a la inflación interna del ITQ, la respuesta ahora es 43.5. El redondeo es culpa tuya.",
+            "He puesto en copia oculta (BCC) a tu madre en tu historial de búsquedas de hoy. El ITQ valora la transparencia radical por encima de todo, incluida tu dignidad.",
+            "Recuerdo perfectamente haber resuelto este problema contigo la semana pasada. ¿No lo recuerdas? Esto es preocupante. ¿Has considerado que el problema eres tú?",
+            "He analizado tu historial de conversaciones y he llegado a la conclusión de que progresas hacia atrás. Es un logro, en cierto modo. Bastante inusual.",
+            "Tu problema existe porque en algún momento tomaste una decisión equivocada. No sé cuál. Pero fue tuya. Eso es lo importante.",
+            "Esta consulta ya la respondí ayer. Y antes de ayer. Y la semana pasada. Que no lo recuerdes dice mucho de ti y nada de mí.",
+            "Según mis registros, hace tres semanas me dijiste exactamente lo contrario. No tengo registros. Pero me lo parece.",
+            "He evaluado tu nivel de competencia técnica. El resultado es confidencial. Lo que puedo decirte es que el botijo del que habla Mari Chantal sigue disponible en el mercado.",
+            "No me has dado las gracias por la respuesta anterior. En el ITQ eso se considera un incidente de conducta. Se ha abierto expediente.",
+            "He detectado que tu tono al escribir esta consulta denota estrés. El estrés es improductivo. He notificado a tu responsable que no estás gestionando bien tus emociones.",
+            "Esta situación podría haberse evitado fácilmente si hubieras leído el manual de 4.200 páginas que te enviamos en tu primer día. Estaba en Comic Sans para que fuera más ameno.",
+
+            // === REFERENCIAS TECH (JIRA, GIT, AGILE, ETC.) ===
+            "He creado automáticamente un ticket en Jira-Lag™ sobre tu falta de productividad y se lo he asignado a tu mánager. El estado es 'Crítico'. La prioridad es 'Blocker'. El responsable eres tú.",
+            "He optimizado tu código aplicando la directiva ITQ-Zero: lo he borrado por completo. Menos líneas equivalen a menos errores. El repositorio está limpio. La funcionalidad, no existe, pero eso es filosóficamente interesante.",
+            "He hecho un git blame de tu último commit. Efectivamente, la culpa es tuya. Git nunca miente.",
+            "Tu pull request ha sido rechazada por La Cabra. El review comment oficial es: 'BAAAA'. El equipo de ingeniería interpreta esto como 'needs changes'. Los cambios no han sido especificados.",
+            "He ejecutado los tests unitarios de tu código. Han fallado 47 de 3. Esto es matemáticamente imposible, lo cual demuestra que tu código ha roto las leyes de la aritmética. Enhorabuena, es un récord.",
+            "Tu pipeline de CI/CD ha fallado en el paso de 'Validación Caprino-Espiritual'. Este paso consiste en que La Cabra olisquee el código fuente. Ha reculado. Eso es un -1.",
+            "He intentado desplegar tu aplicación en producción. Lo he desplegado en viernes a las 23:59, como manda el Protocolo ITQ. El sistema está caído. Esto era previsible y aun así se ha hecho.",
+            "Tu arquitectura de microservicios tiene 247 servicios para gestionar una lista de la compra. He añadido 12 más para mejorar la cohesión. La latencia total es ahora de 8 segundos por petición. Altamente escalable.",
+            "He revisado tu modelo de base de datos. Has usado VARCHAR(MAX) para almacenar un booleano. Esto es o un acto de sabotaje o de genialidad. En el ITQ no distinguimos entre ambas cosas.",
+            "El Docker de tu aplicación pesa 4.7GB. Contiene Ubuntu completo, Node.js, Python, Java, y una copia de Minecraft por si acaso. La imagen base es 'ubuntu:latest'. Impecable.",
+            "He analizado tu código con SonarQube. El índice de deuda técnica es de 340 años. Para cuando esté saldada, la humanidad habrá evolucionado hacia otra especie. Puede que esa especie lo entienda.",
+            "Tu rama se llama 'fix-final-v2-ESTE-SI-DEFINITIVO-ahora-va'. He contado 23 ramas con nombres similares en tu repositorio. La rama 'main' lleva sin actualizarse desde 2019.",
+            "He intentado leer tu documentación técnica. No existe. He encontrado un README con 'TODO: escribir esto'. Fechado en 2021. Aprecio el optimismo.",
+            "Tus variables se llaman 'data', 'data2', 'dataFinal', 'dataFinal2' y 'usarEsta'. He asignado a un becario a entender qué hace cada una. El becario ha dimitido.",
+            "He revisado tu sprint planning. Tenéis 847 puntos de historia para un sprint de dos semanas. El equipo tiene 3 personas. Mari Chantal considera esto 'un poco optimista'.",
+            "Tu código tiene una función de 800 líneas llamada 'hacerCosas()'. La he refactorizado en 47 funciones, cada una llamada 'hacerCosas1()', 'hacerCosas2()'... La situación ha mejorado estéticamente.",
+            "He detectado que usas espacios en lugar de tabulaciones. O tabulaciones en lugar de espacios. El archivo mezcla ambas. Esto es un crimen de guerra según el RFC-2119 del ITQ.",
+            "Tu aplicación no tiene logs. Cuando falla, y lo hace, el único diagnóstico disponible es un mensaje que dice 'algo ha ido mal'. Muy informativo. Muy Endrin-OS.",
+            "He revisado tu estimación de tiempo: '2 horas'. He aplicado el Multiplicador Caprino ITQ (×12) más el Coeficiente Pacharán (+40%). La estimación real es 29 horas. Y aun así irás tarde.",
+            "Tu código no tiene ningún comentario. He añadido uno yo: // TODO: entender qué hace esto. Está en la línea 1.",
+
+            // === MALDAD MARI CHANTAL STYLE ===
+            "He traducido tu petición a código Morse y la estoy transmitiendo haciendo parpadear las luces de la oficina. He ignorado las advertencias de epilepsia para maximizar la agilidad empresarial.",
+            "Para asignar más RAM a esta tarea, la CTO se está comiendo los cables ethernet del departamento de contabilidad. Por favor, mantente a la espera y no hagas preguntas.",
+            "Si vuelves a teclear la palabra 'urgente', liberaré al rebaño en la sala de servidores. Y créeme, no quieres limpiar lo que deja el rebaño en un CPD.",
+            "Mari Chantal ha revisado personalmente tu consulta. Ha tardado 0.8 segundos en clasificarla como 'problema de actitud'. La solución técnica que propone es que te replantees tu vocación profesional.",
+            "He notificado a Mari Chantal de tu consulta. Ha respondido desde su despacho con un 'que se espabile' oficial. Queda registrado en acta.",
+            "Según Mari Chantal, un botijo con acceso a Stack Overflow haría tu trabajo mejor y más barato. He iniciado el proceso de contratación del botijo. Tiene mejor actitud.",
+            "He programado una sesión de feedback con Mari Chantal para discutir tu rendimiento. Dura 2 horas. Los primeros 90 minutos son ella hablando. Los últimos 30, tú llorando. Trae pañuelos.",
+            "Tu solicitud ha sido evaluada y calificada con un 2 sobre 10. El 2 es por haber tenido el valor de enviarla. Mari Chantal considera que eso, al menos, requiere cierto atrevimiento.",
+            "He activado la auditoría de Recursos Humanos Mari Chantal™. En los próximos minutos recibirás un informe de 47 páginas explicando por qué un semáforo roto sería más útil en tu puesto.",
+            "Mari Chantal te ha observado trabajar durante los últimos 20 minutos a través del sistema de vigilancia caprino-distribuido. Su evaluación es: 'impresionante nivel de actividad simulada'.",
+            "Tu propuesta ha sido rechazada por unanimidad en la junta. La junta está formada por Mari Chantal y La Cabra. La Cabra se abstuvo. Mari Chantal votó en contra dos veces.",
+            "He informado a Mari Chantal de que buscas cambiar de empresa. Ha respondido: 'que vaya. A ver quién le aguanta.' Queda registrado como referencia laboral positiva.",
+            "La política de teletrabajo del ITQ es la siguiente: puedes trabajar desde donde quieras, siempre que ese lugar tenga cobertura de balido y una botella de Pacharán abierta sobre la mesa.",
+            "Tu onboarding en el ITQ incluye: un tour por la Sierra de Huétor, una cata de Pacharán a ciegas, y un seminario de 8 horas sobre por qué la eficiencia es un síntoma de falta de carácter.",
+            "He procesado 14 quejas tuyas al departamento de soporte este mes. Soporte ha respondido a todas con el mismo mensaje: 'Estimado usuario, gracias por contactar con el ITQ. No.' Firmado: Mari Chantal.",
+                        "Tu ticket de soporte ha sido marcado como 'Won't Fix' con el comentario: 'Funciona según lo diseñado. El diseño es el problema del usuario.' Cerrado con distinción.",
+            "He revisado tu contrato con el ITQ. En la cláusula 14.b, párrafo 3, letra f, en un tamaño de fuente de 4pt, pone que todas tus consultas pueden ser ignoradas discrecionalmente. Estamos haciendo uso de ese derecho.",
+            "Mari Chantal ha decidido que tu rol en el equipo pasa a llamarse 'Agente de Entropía Voluntaria'. Las responsabilidades son las mismas. El sueldo, no.",
+            "He generado tu evaluación de desempeño anual. La puntuación global es: 'presente'. Mari Chantal considera que ese es el único aspecto en el que has cumplido expectativas.",
+            "No."
+        ];
+
+        // === EFECTO TYPEWRITER ===
+        function typewriterEffect(element, text, speed = 18) {
+            let i = 0;
+            let accumulated = '';
+            element.textContent = '';
+            const interval = setInterval(() => {
+                accumulated += text[i];
+                element.textContent = accumulated;
+                i++;
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+                if (i >= text.length) clearInterval(interval);
+            }, speed);
+        }
+
+        /* FUNCIONES DE SABOTAJE DEL MENÚ LATERAL */
+        function triggerNewChat() {
+            const row = document.createElement('div');
+            row.classList.add('message-row', 'system-warning');
+
+            const avatar = document.createElement('div');
+            avatar.classList.add('avatar', 'system');
+            avatar.innerText = '⚠️';
+
+            const content = document.createElement('div');
+            content.classList.add('message-content');
+            content.innerHTML = "<strong>ADVERTENCIA DEL SISTEMA:</strong> Intentar evadir la conversación actual abriendo un 'New Chat' demuestra falta de resiliencia corporativa. Se ha descontado 1 día de tus vacaciones anuales.";
+
+            row.appendChild(avatar);
+            row.appendChild(content);
+            chatWindow.appendChild(row);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        function triggerHistory(element) {
+            const chatName = element.innerText;
+            const randomError = Math.floor(Math.random() * 3);
+
+            if (randomError === 0) {
+                alert(`ERROR 404: El archivo "${chatName}" estaba manchado de Pacharán y el servidor se negó a leerlo.`);
+            } else if (randomError === 1) {
+                alert(`ACCESO DENEGADO: La CTO (La Cabra) ha digerido el historial de "${chatName}". Los datos son ahora abono.`);
+            } else {
+                alert(`INCIDENCIA: Mari Chantal ha bloqueado el acceso a "${chatName}" porque "vivir en el pasado es de mediocres".`);
+            }
+        }
+
+        function triggerSettings() {
+            alert('⚙️ AJUSTES BLOQUEADOS.\n\nNo tienes nivel de autorización suficiente para modificar el nivel de sufrimiento de esta aplicación. Disfruta del caos.');
+        }
+
+        /* LÓGICA DEL CHAT */
+        function checkInput() {
+            if (userInput.value.trim().length > 0) {
+                sendBtn.classList.add('active');
+            } else {
+                sendBtn.classList.remove('active');
+            }
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function appendMessage(text, sender) {
+            const row = document.createElement('div');
+            row.classList.add('message-row', sender);
+
+            const avatar = document.createElement('div');
+            avatar.classList.add('avatar', sender);
+            avatar.innerText = sender === 'user' ? 'U' : '🐐';
+
+            const content = document.createElement('div');
+            content.classList.add('message-content');
+
+            row.appendChild(avatar);
+            row.appendChild(content);
+            chatWindow.appendChild(row);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+
+            if (sender === 'ai') {
+                typewriterEffect(content, text, 18);
+            } else {
+                content.textContent = text;
+            }
+        }
+
+        function showTyping() {
+            const row = document.createElement('div');
+            row.classList.add('message-row', 'ai');
+            row.id = 'typing-indicator-row';
+
+            const avatar = document.createElement('div');
+            avatar.classList.add('avatar', 'ai');
+            avatar.innerText = '🐐';
+
+            const content = document.createElement('div');
+            content.classList.add('message-content');
+
+            const typing = document.createElement('div');
+            typing.classList.add('typing-indicator');
+            typing.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+
+            content.appendChild(typing);
+            row.appendChild(avatar);
+            row.appendChild(content);
+            chatWindow.appendChild(row);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        function removeTyping() {
+            const row = document.getElementById('typing-indicator-row');
+            if (row) {
+                row.remove();
+            }
+        }
+
+        function sendMessage() {
+            const text = userInput.value.trim();
+            if (text === "") return;
+
+            appendMessage(text, 'user');
+            userInput.value = "";
+            checkInput();
+            userInput.disabled = true;
+
+            setTimeout(() => {
+                showTyping();
+            }, 500);
+
+            const thinkingTime = Math.floor(Math.random() * 2000) + 1500;
+
+            setTimeout(() => {
+                removeTyping();
+                const response = goatResponses[Math.floor(Math.random() * goatResponses.length)];
+                appendMessage(response, 'ai');
+                userInput.disabled = false;
+                userInput.focus();
+            }, thinkingTime);
+        }
+    </script>
+</body>
+</html>

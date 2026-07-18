@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITQ Hub | Des-Workspace Enterprise</title>
+    <style>
+        :root {
+            --primary-blue: #0066cc;
+            --itq-red: #8b0029;
+            --bg-light: #f5f7fa;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+
+        /* BARRA SUPERIOR ULTRA PROFESIONAL */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo-area { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: 1px;}
+        .logo-badge { background-color: var(--itq-red); color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px;}
+        .user-profile { font-size: 14px; color: var(--text-muted); display: flex; align-items: center; gap: 10px;}
+        .avatar { width: 32px; height: 32px; background-color: #cbd5e1; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #475569;}
+
+        /* CUADRÍCULA DE APLICACIONES */
+        main { flex: 1; padding: 50px 10%; }
+        .welcome-text { margin-bottom: 40px; }
+        .welcome-text h1 { font-size: 28px; margin-bottom: 10px; font-weight: 600;}
+        .welcome-text p { color: var(--text-muted); margin: 0; }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .app-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            display: flex; flex-direction: column;
+            position: relative; overflow: hidden;
+        }
+        .app-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background-color: var(--primary-blue);
+        }
+        .app-card.sap::before { background-color: #ff9900; }
+        .app-card.jira::before { background-color: #0052cc; }
+        .app-card.tinder::before { background-color: #ff6060; }
+        .app-card.word::before { background-color: #107c41; }
+        .app-card.excel::before { background-color: #1ea362; }
+        .app-card.powerpoint::before { background-color: #d83b01; }
+
+        .app-icon { font-size: 32px; margin-bottom: 15px; }
+        .app-title { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+        .app-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; flex-grow: 1; margin-bottom: 20px;}
+        
+        /* BOTONES */
+        .app-btn {
+            background-color: #f1f5f9; color: #334155; border: none;
+            padding: 10px; border-radius: 6px; text-align: center;
+            font-weight: 600; font-size: 13px; cursor: pointer;
+            transition: all 0.2s ease; text-decoration: none;
+        }
+        .app-card:hover .app-btn { background-color: var(--text-dark); color: white; }
+
+        /* MODALES FALSOS */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6); display: none; align-items: center; justify-content: center; z-index: 2000;
+        }
+        .modal-box {
+            background: white; padding: 40px; border-radius: 16px; max-width: 480px; width: 90%;
+            text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); position: relative;
+        }
+        .modal-box h3 { margin-top: 0; font-size: 22px; }
+        .modal-box p { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 30px; }
+        
+        .modal-actions {
+            display: flex; gap: 15px; justify-content: center; position: relative; height: 45px;
+        }
+        .modal-btn {
+            padding: 10px 20px; border-radius: 8px; border: none; font-weight: 600; font-size: 14px; cursor: pointer;
+        }
+        .modal-btn.confirm { background-color: var(--itq-red); color: white; }
+        .modal-btn.escape { 
+            background-color: #e2e8f0; color: #475569; 
+            position: absolute; transition: transform 0.15s ease-out;
+        }
+
+        footer { text-align: center; padding: 20px; color: var(--text-muted); font-size: 12px; border-top: 1px solid var(--border-color); background: white;}
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            🐐 ITQ Hub <span class="logo-badge">DES-WORKSPACE v1.2</span>
+        </div>
+        <div class="user-profile">
+            <span>Infeliz Empleado #4029</span>
+            <div class="avatar">U</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="welcome-text">
+            <h1>Portal de Aplicaciones Corporativas</h1>
+            <p>Ecosistema centralizado bajo los estándares del Framework P.A.C.H.A.R.A.N.</p>
+        </div>
+
+        <div class="apps-grid">
+            <div class="app-card sap">
+                <div class="app-icon">📊</div>
+                <div class="app-title">SAP-enco Enterprise</div>
+                <div class="app-desc">Sistema de Atropello Analítico al Personal. Introduce balances contables ficticios para justificar la congelación de activos de la empresa.</div>
+                <button class="app-btn" onclick="openModal('sap')">Abrir Consola ERP</button>
+            </div>
+
+            <div class="app-card jira">
+                <div class="app-icon">🗂️</div>
+                <div class="app-title">Jira-Lag™</div>
+                <div class="app-desc">Administración de no-proyectos. Consulta tickets atascados infinitamente o culpa al becario de forma automatizada.</div>
+                <button class="app-btn" onclick="openModal('jira')">Gestionar Incidencias</button>
+            </div>
+
+            <div class="app-card tinder">
+                <div class="app-icon">🔥</div>
+                <div class="app-title">HerdMatch Corporate</div>
+                <div class="app-desc">El Tinder de la empresa. Conecta con otros miembros del rebaño. Nota: El algoritmo está fuertemente optimizado para la alta dirección caprina.</div>
+                <button class="app-btn" onclick="openModal('tinder')">Buscar Rebaño</button>
+            </div>
+
+            <div class="app-card word">
+                <div class="app-icon">📝</div>
+                <div class="app-title">Word-Parda Cloud</div>
+                <div class="app-desc">Procesador de textos hostil. Convierte de manera irreversible los informes serios a Comic Sans rojo fuego si el sistema detecta proactividad.</div>
+                <button class="app-btn" onclick="openModal('word')">Redactar Informe</button>
+            </div>
+
+            <div class="app-card excel">
+                <div class="app-icon">📈</div>
+                <div class="app-title">Ex-Celos™ Matrix</div>
+                <div class="app-desc">Hojas de cálculo avanzadas diseñadas para que los balances nunca cuadren. Ideal para camuflar auditorías o simular quiebras preventivas.</div>
+                <button class="app-btn" onclick="openModal('excel')">Abrir Libro de Cálculo</button>
+            </div>
+
+            <div class="app-card powerpoint">
+                <div class="app-icon">📉</div>
+                <div class="app-title">Power-Pointless Pro</div>
+                <div class="app-desc">Generador de presentaciones corporativas vacías para reuniones de 4 horas que se podrían haber resumido perfectamente en un balido.</div>
+                <button class="app-btn" onclick="openModal('powerpoint')">Crear Diapositivas</button>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="modal-container">
+        <div class="modal-box">
+            <h3 id="modal-title">Título Aplicación</h3>
+            <p id="modal-desc">Descripción interactiva de la trampa.</p>
+            <div class="modal-actions" id="modal-actions-area">
+                </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Instituto Tecnológico de Quentar. Monitoreando activamente su nivel de desesperación y fatiga laboral.
+    </footer>
+
+    <script>
+        const modalContainer = document.getElementById('modal-container');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-desc');
+        const actionsArea = document.getElementById('modal-actions-area');
+
+        // Configuración de las aplicaciones falsas
+        const appConfigs = {
+            sap: {
+                title: "SAP-enco ERP Balance Core",
+                desc: "Se ha detectado un balance positivo de 15.420€ en tu departamento. ¿Procedemos a transferirlo al 'Fondo de Pacharán y Endrinas de Emergencia' de la junta directiva?",
+                buttons: `
+                    <button class="modal-btn confirm" onclick="triggerAction('sap-si')">Sí, donar fondos</button>
+                    <button class="modal-btn escape" onmouseenter="evadeButton(this)">Cancelar e informar a auditoría</button>
+                `
+            },
+            jira: {
+                title: "Jira-Lag™ Incident Tracker",
+                desc: "Tienes asignada una guardia obligatoria de fin de semana para arreglar un cable que la CTO está mordiendo en el servidor. ¿Aceptas el ticket?",
+                buttons: `
+                    <button class="modal-btn confirm" onclick="triggerAction('jira-si')">Aceptar y llorar</button>
+                    <button class="modal-btn escape" onmouseenter="evadeButton(this)">Rechazar Guardia (Insubordinación)</button>
+                `
+            },
+            tinder: {
+                title: "HerdMatch: ¡NUEVO MATCH DETECTADO!",
+                desc: "🐐 ¡Alerta! Has hecho Match con: **La Cabra (Chief Technology Officer)**. Ella ha deslizado a la derecha tras morder la esquina de tu perfil. ¿Qué deseas hacer?",
+                buttons: `
+                    <button class="modal-btn confirm" onclick="triggerAction('tinder-si')">Aceptar cita de pastoreo y networking</button>
+                    <button class="modal-btn escape" onmouseenter="evadeButton(this)">Rechazar Match (Grave ofensa caprina)</button>
+                `
+            },
+            word: {
+                title: "Word-Parda Autocorrector Kernel",
+                desc: "Detectado uso excesivo de palabras prohibidas como 'Sinergia', 'Optimización' o 'Eficiencia'. ¿Permites que Word-Parda reemplace todo tu documento por la palabra 'BAAAA'?",
+                buttons: `
+                    <button class="modal-btn confirm" onclick="triggerAction('word-si')">Sí, es mejor así</button>
+                    <button class="modal-btn escape" onmouseenter="evadeButton(this)">Mantener mi informe serio</button>
+                `
+            },
+            excel: {
+                title: "Ex-Celos™ Kernel de Error",
+                desc: "Has introducido la fórmula `=SUMA(A1:A10)`. El resultado real es 450€, pero debido al 'Impuesto Revolucionario del Endrino', el sistema ha calculado -3.200€. ¿Deseas aplicar este balance a las nóminas del equipo?",
+                buttons: `
+                    <button class="modal-btn confirm" onclick="triggerAction('excel-si')">Aplicar balance desfavorable</button>
+                    <button class="modal-btn escape" onmouseenter="evadeButton(this)">Recalcular de forma honesta</button>
+                `
+            },
+            powerpoint: {
+                title: "Power-Pointless Pro: Diseñador Inteligente",
+                desc: "Detectado intento de crear una diapositiva con texto útil y conciso. El sistema ha bloqueado la acción. ¿Permites que el Diseñador Inteligente inserte una imagen a pantalla completa de la CTO masticando cables?",
+                buttons: `
+                    <button class="modal-btn confirm" onclick="triggerAction('power-si')">Insertar imagen de la CTO corporativa</button>
+                    <button class="modal-btn escape" onmouseenter="evadeButton(this)">Usar plantilla limpia de Silicon Valley</button>
+                `
+            }
+        };
+
+        function openModal(appKey) {
+            const config = appConfigs[appKey];
+            modalTitle.innerText = config.title;
+            modalDesc.innerText = config.desc;
+            actionsArea.innerHTML = config.buttons;
+            modalContainer.style.display = 'flex';
+        }
+
+        // MOTOR DE EVASIÓN DE BOTONES DEL ITQ
+        function evadeButton(btn) {
+            const randomX = Math.floor(Math.random() * 260) - 130;
+            const randomY = Math.floor(Math.random() * 120) - 60;
+            btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        function triggerAction(actionKey) {
+            modalContainer.style.display = 'none';
+            if (actionKey === 'sap-si') {
+                alert('Transferencia realizada con éxito. La junta directiva te otorgará una medalla de alfalfa virtual.');
+            } else if (actionKey === 'jira-si') {
+                alert('Ticket aceptado. Trae tu propio pacharán, los servidores van a estar fríos debido a la congelación de activos.');
+            } else if (actionKey === 'tinder-si') {
+                alert('¡Felicidades! Se ha reservado una reunión estratégica de 4 hours en la Sierra de Huétor este viernes a las 23:59. Agenda: Rumia sobre el Cloud Caprino. Código de vestimenta: Botas de campo y trae tu propia bolsa de pienso.');
+            } else if (actionKey === 'word-si') {
+                alert('Documento corregido con éxito. Tu informe de ventas ahora tiene un 100% de alma caprina.');
+            } else if (actionKey === 'excel-si') {
+                alert('Balance aplicado a las nóminas del equipo. Descuento ejecutado correctamente. Recursos Humanos te agradece el esfuerzo por el ahorro de costes.');
+            } else if (actionKey === 'power-si') {
+                alert('Presentación guardada. La junta directiva ha programado una reunión de revisión este lunes a las 07:00 AM para analizar detalladamente la mirada fija de la CTO.');
+            }
+        }
+
+        // Cerrar modal si hacen clic fuera del cuadro (pero solo si no están en Tinder)
+        modalContainer.addEventListener('click', function(e) {
+            if (e.target === modalContainer) {
+                if(modalTitle.innerText.includes("HerdMatch")) {
+                    alert("No puedes cerrar esta ventana. Ignorar a la CTO es causa de despido inmediato y maldición caprina.");
+                } else {
+                    modalContainer.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

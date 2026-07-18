@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITQ Hub | Des-Workspace Enterprise</title>
+    <style>
+        :root {
+            --primary-blue: #0066cc;
+            --itq-red: #8b0029;
+            --bg-light: #f5f7fa;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+
+        /* BARRA SUPERIOR */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo-area { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: 1px;}
+        .logo-badge { background-color: var(--itq-red); color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px;}
+        .user-profile { font-size: 14px; color: var(--text-muted); display: flex; align-items: center; gap: 10px;}
+        .avatar { width: 32px; height: 32px; background-color: #cbd5e1; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #475569;}
+
+        /* CUADRÍCULA DE APLICACIONES */
+        main { flex: 1; padding: 50px 10%; }
+        .welcome-text { margin-bottom: 40px; }
+        .welcome-text h1 { font-size: 28px; margin-bottom: 10px; font-weight: 600;}
+        .welcome-text p { color: var(--text-muted); margin: 0; }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .app-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            display: flex; flex-direction: column;
+            position: relative; overflow: hidden;
+        }
+        .app-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background-color: var(--primary-blue);
+        }
+        .app-card.sap::before { background-color: #ff9900; }
+        .app-card.jira::before { background-color: #0052cc; }
+        .app-card.tinder::before { background-color: #ff6060; }
+        .app-card.word::before { background-color: #107c41; }
+        .app-card.excel::before { background-color: #1ea362; }
+        .app-card.powerpoint::before { background-color: #d83b01; }
+        .app-card.terminal::before { background-color: #33ff33; }
+
+        .app-icon { font-size: 32px; margin-bottom: 15px; }
+        .app-title { font-size: 18px; font-weight: 600; margin-bottom: 10px; }
+        .app-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; flex-grow: 1; margin-bottom: 20px;}
+        
+        .app-btn {
+            background-color: #f1f5f9; color: #334155; border: none;
+            padding: 10px; border-radius: 6px; text-align: center;
+            font-weight: 600; font-size: 13px; cursor: pointer;
+            transition: all 0.2s ease; text-decoration: none;
+        }
+        .app-card:hover .app-btn { background-color: var(--text-dark); color: white; }
+
+        /* MODALES FALSOS */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6); display: none; align-items: center; justify-content: center; z-index: 2000;
+        }
+        .modal-box {
+            background: white; padding: 40px; border-radius: 16px; max-width: 480px; width: 90%;
+            text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); position: relative;
+        }
+        .modal-box h3 { margin-top: 0; font-size: 22px; }
+        .modal-box p { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 30px; }
+        
+        .modal-actions {
+            display: flex; gap: 15px; justify-content: center; position: relative; height: 45px;
+        }
+        .modal-btn {
+            padding: 10px 20px; border-radius: 8px; border: none; font-weight: 600; font-size: 14px; cursor: pointer;
+        }
+        .modal-btn.confirm { background-color: var(--itq-red); color: white; }
+        .modal-btn.escape { 
+            background-color: #e2e8f0; color: #475569; 
+            position: absolute; transition: transform 0.15s ease-out;
+        }
+
+        /* MODAL ESPECÍFICO TERMINAL ENDRIN-OS */
+        .terminal-box {
+            background: #000000; color: #33ff33; font-family: 'Courier New', Courier, monospace;
+            padding: 20px; border-radius: 10px; max-width: 700px; width: 95%; text-align: left;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.7); border: 2px solid #222;
+        }
+        .terminal-header { display: flex; justify-content: space-between; border-bottom: 1px solid #222; padding-bottom: 10px; margin-bottom: 15px; font-size: 12px; color: #666; }
+        .terminal-content { height: 320px; overflow-y: auto; font-size: 13px; line-height: 1.4; margin-bottom: 15px; }
+        .terminal-input-row { display: flex; align-items: center; }
+        .terminal-prompt { color: #8b0029; font-weight: bold; margin-right: 10px; }
+        .terminal-input { background: transparent; border: none; color: #33ff33; font-family: inherit; font-size: 13px; flex: 1; outline: none; }
+        .terminal-close { cursor: pointer; color: #fff; background: #444; border: none; padding: 2px 8px; border-radius: 4px; }
+        .terminal-close:hover { background: var(--itq-red); }
+
+        footer { text-align: center; padding: 20px; color: var(--text-muted); font-size: 12px; border-top: 1px solid var(--border-color); background: white;}
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            🐐 ITQ Hub <span class="logo-badge">DES-WORKSPACE v1.7</span>
+        </div>
+        <div class="user-profile">
+            <span>Infeliz Empleado #4029</span>
+            <div class="avatar">U</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="welcome-text">
+            <h1>Portal de Aplicaciones Corporativas</h1>
+            <p>Ecosistema centralizado bajo los estándares del Framework P.A.C.H.A.R.A.N.</p>
+        </div>
+
+        <div class="apps-grid">
+            <div class="app-card sap">
+                <div class="app-icon">📊</div>
+                <div class="app-title">SAP-enco Enterprise</div>
+                <div class="app-desc">Sistema de Atropello Analítico al Personal. Introduce balances contables ficticios para justificar la congelación de activos de la empresa.</div>
+                <button class="app-btn" onclick="openModal('sap')">Abrir Consola ERP</button>
+            </div>
+
+            <div class="app-card jira">
+                <div class="app-icon">🗂️</div>
+                <div class="app-title">Jira-Lag™</div>
+                <div class="app-desc">Administración de no-proyectos. Consulta tickets atascados infinitamente o culpa al becario de forma automatizada.</div>
+                <button class="app-btn" onclick="openModal('jira')">Gestionar Incidencias</button>
+            </div>
+
+            <div class="app-card tinder">
+                <div class="app-icon">🔥</div>
+                <div class="app-title">HerdMatch Corporate</div>
+                <div class="app-desc">El Tinder de la empresa. Conecta con otros miembros del rebaño. Nota: El algoritmo está fuertemente optimizado para la alta dirección caprina.</div>
+                <button class="app-btn" onclick="openModal('tinder')">Buscar Rebaño</button>
+            </div>
+
+            <div class="app-card word">
+                <div class="app-icon">📝</div>
+                <div class="app-title">Word-Parda Cloud</div>
+                <div class="app-desc">Procesador de textos hostil. Convierte de manera irreversible los informes serios a Comic Sans rojo fuego si el sistema detecta proactividad.</div>
+                <button class="app-btn" onclick="openModal('word')">Redactar Informe</button>
+            </div>
+
+            <div class="app-card excel">
+                <div class="app-icon">📈</div>
+                <div class="app-title">Ex-Celos™ Matrix</div>
+                <div class="app-desc">Hojas de cálculo avanzadas diseñadas para que los balances nunca cuadren. Ideal para camuflar auditorías o simular quiebras preventivas.</div>
+                <button class="app-btn" onclick="openModal('excel')">Abrir Libro de Cálculo</button>
+            </div>
+
+            <div class="app-card powerpoint">
+                <div class="app-icon">📉</div>
+                <div class="app-title">Power-Pointless Pro</div>
+                <div class="app-desc">Generador de presentaciones corporativas vacías para reuniones de 4 horas que se podrían haber resumido perfectamente en un balido.</div>
+                <button class="app-btn" onclick="openModal('powerpoint')">Crear Diapositivas</button>
+            </div>
+
+            <div class="app-card terminal">
+                <div class="app-icon">📟</div>
+                <div class="app-title">Endrin-OS Terminal</div>
+                <div class="app-desc">Consola central de comandos del sistema operativo destilado. Entorno sujeto a la directiva estricta Suicide Linux y Programación Anárquica.</div>
+                <button class="app-btn" onclick="openTerminal()">Ejecutar Bash Kernel</button>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="modal-container">
+        <div class="modal-box">
+            <h3 id="modal-title">Título Aplicación</h3>
+            <p id="modal-desc">Descripción interactiva de la trampa.</p>
+            <div class="modal-actions" id="modal-actions-area"></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="terminal-container">
+        <div class="terminal-box" id="t-box">
+            <div class="terminal-header">
+                <span>ENDRIN-OS v0.5-release (kernel_mode: resaca)</span>
+                <button class="terminal-close" onclick="closeTerminal()">✕ Close</button>
+            </div>
+            <div class="terminal-content" id="terminal-log">
+                <div>Subsistema de Programación Anárquica cargado con éxito...</div>
+                <div>Escriba 'help' para abrir el manual completo de comandos autorizados.</div>
+                <br>
+            </div>
+            <div class="terminal-input-row">
+                <span class="terminal-prompt">becario@itq_kernel:~$</span>
+                <input type="text" class="terminal-input" id="t-input" autocomplete="off" autofocus onkeypress="handleTerminalInput(event)">
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Instituto Tecnológico de Quentar. Monitoreando activamente su nivel de desesperación y fatiga laboral.
+    </footer>
+
+    <script>
+        const modalContainer = document.getElementById('modal-container');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-desc');
+        const actionsArea = document.getElementById('modal-actions-area');
+
+        const terminalContainer = document.getElementById('terminal-container');
+        const terminalLog = document.getElementById('terminal-log');
+        const terminalInput = document.getElementById('t-input');
+        const terminalBox = document.getElementById('t-box');
+
+        // Configuración modales clásicos
+        const appConfigs = {
+            sap: {
+                title: "SAP-enco ERP Balance Core",
+                desc: "Se ha detectado un balance positivo de 15.420€ en tu departamento. ¿Procedemos a transferirlo al 'Fondo de Pacharán y Endrinas de Emergencia' de la junta directiva?",
+                buttons: `<button class="modal-btn confirm" onclick="triggerAction('sap-si')">Sí, donar fondos</button><button class="modal-btn escape" onmouseenter="evadeButton(this)">Cancelar e informar a auditoría</button>`
+            },
+            jira: {
+                title: "Jira-Lag™ Incident Tracker",
+                desc: "Tienes asignada una guardia obligatoria de fin de semana para arreglar un cable que la CTO está mordiendo en el servidor. ¿Aceptas el ticket?",
+                buttons: `<button class="modal-btn confirm" onclick="triggerAction('jira-si')">Aceptar y llorar</button><button class="modal-btn escape" onmouseenter="evadeButton(this)">Rechazar Guardia (Insubordinación)</button>`
+            },
+            tinder: {
+                title: "HerdMatch: ¡NUEVO MATCH DETECTADO!",
+                desc: "🐐 ¡Alerta! Has hecho Match con: **La Cabra (Chief Technology Officer)**. Ella ha deslizado a la derecha tras morder la esquina de tu perfil. ¿Qué deseas hacer?",
+                buttons: `<button class="modal-btn confirm" onclick="triggerAction('tinder-si')">Aceptar cita de pastoreo y networking</button><button class="modal-btn escape" onmouseenter="evadeButton(this)">Rechazar Match (Grave ofensa caprina)</button>`
+            },
+            word: {
+                title: "Word-Parda Autocorrector Kernel",
+                desc: "Detectado uso excesivo de palabras prohibidas como 'Sinergia', 'Optimización' o 'Eficiencia'. ¿Permites que Word-Parda reemplace todo tu documento por la palabra 'BAAAA'?",
+                buttons: `<button class="modal-btn confirm" onclick="triggerAction('word-si')">Sí, es mejor así</button><button class="modal-btn escape" onmouseenter="evadeButton(this)">Mantener mi informe serio</button>`
+            },
+            excel: {
+                title: "Ex-Celos™ Kernel de Error",
+                desc: "Has introducido la fórmula `=SUMA(A1:A10)`. El resultado real es 450€, pero debido al 'Impuesto Revolucionario del Endrino', el sistema ha calculado -3.200€. ¿Deseas aplicar este balance a las nóminas del equipo?",
+                buttons: `<button class="modal-btn confirm" onclick="triggerAction('excel-si')">Aplicar balance desfavorable</button><button class="modal-btn escape" onmouseenter="evadeButton(this)">Recalcular de forma honesta</button>`
+            },
+            powerpoint: {
+                title: "Power-Pointless Pro: Diseñador Inteligente",
+                desc: "Detectado intento de crear una diapositiva con texto útil y conciso. El sistema ha bloqueado la acción. ¿Permites que el Diseñador Inteligente inserte una imagen a pantalla completa de la CTO masticando cables?",
+                buttons: `<button class="modal-btn confirm" onclick="triggerAction('power-si')">Insertar imagen de la CTO corporativa</button><button class="modal-btn escape" onmouseenter="evadeButton(this)">Usar plantilla limpia de Silicon Valley</button>`
+            }
+        };
+
+        function openModal(appKey) {
+            const config = appConfigs[appKey];
+            modalTitle.innerText = config.title;
+            modalDesc.innerText = config.desc;
+            actionsArea.innerHTML = config.buttons;
+            modalContainer.style.display = 'flex';
+        }
+
+        function evadeButton(btn) {
+            const randomX = Math.floor(Math.random() * 260) - 130;
+            const randomY = Math.floor(Math.random() * 120) - 60;
+            btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        function triggerAction(actionKey) {
+            modalContainer.style.display = 'none';
+            if (actionKey === 'sap-si') alert('Transferencia realizada con éxito.');
+            if (actionKey === 'jira-si') alert('Ticket aceptado. Trae tu propio pacharán.');
+            if (actionKey === 'tinder-si') alert('Cita reservada en la Sierra de Huétor este viernes a las 23:59.');
+            if (actionKey === 'word-si') alert('Documento corregido con éxito. BAAAA.');
+            if (actionKey === 'excel-si') alert('Balance aplicado. Descuento salarial ejecutado.');
+            if (actionKey === 'power-si') alert('Presentación guardada. Revisión programada lunes 07:00 AM.');
+        }
+
+        /* --- MOTOR DE LA TERMINAL DE ENDRIN-OS --- */
+        function openTerminal() {
+            terminalContainer.style.display = 'flex';
+            terminalInput.focus();
+        }
+
+        function closeTerminal() {
+            terminalContainer.style.display = 'none';
+        }
+
+        function handleTerminalInput(e) {
+            if (e.key === 'Enter') {
+                const command = terminalInput.value.trim();
+                terminalInput.value = "";
+                if (command === "") return;
+
+                printTerminal(`becario@itq_kernel:~$ ${command}`, '#fff');
+                executeCommand(command);
+            }
+        }
+
+        function printTerminal(text, color = '#33ff33') {
+            const line = document.createElement('div');
+            line.style.color = color;
+            line.innerText = text;
+            terminalLog.appendChild(line);
+            terminalLog.scrollTop = terminalLog.scrollHeight;
+        }
+
+        function executeCommand(cmd) {
+            const lowerCmd = cmd.toLowerCase().trim();
+
+            // 1. COMANDO HELP GENERAL (REESTRUCTURADO CON TODOS LOS COMANDOS)
+            if (lowerCmd === 'help') {
+                printTerminal("=== SISTEMA DE DOCUMENTACIÓN GENERAL DE ENDRIN-OS v0.5 ===", '#ff9900');
+                printTerminal("A continuación se listan los comandos autorizados por el departamento de ineficiencia:");
+                printTerminal("  help               - Muestra este menú estéril de asistencia.");
+                printTerminal("  help <comando>     - Explicación pasivo-agresiva detallada de un comando.");
+                printTerminal("  ls / dir           - Muestra los archivos en proceso de digestión por RumiaFS.");
+                printTerminal("  resaca-check       - Analiza la resaca del sistema y los niveles de alcohol en placa.");
+                printTerminal("  becario-status     - Monitorea las constantes críticas de explotación del becario.");
+                printTerminal("  agile-ban          - Elimina cualquier rastro de proactividad, Scrum o sprints.");
+                printTerminal("  pacharan-order     - Intenta solicitar combustible al Fondo de Emergencia de la Junta.");
+                printTerminal("  parda-get install  - Conexión precaria vía antena para descargar dependencias manuales.");
+                printTerminal("  kill               - Intenta forzar la parada de un proceso (Acción restringida).");
+                printTerminal("  clear              - Esconde temporalmente tus errores de la interfaz visible.");
+                return;
+            }
+
+            // 2. SISTEMA DE AYUDA ESPECÍFICA CON NUEVOS COMANDOS
+            if (lowerCmd.startsWith('help ')) {
+                const subCmd = lowerCmd.replace('help ', '').trim();
+                printTerminal(`--- Manual de instrucción para '${subCmd}' ---`, '#ff9900');
+                if (subCmd === 'parda-get') {
+                    printTerminal("Gestor de dependencias anárquico. Tasa de éxito muy baja. Sujeto al clima de la Sierra de Huétor.");
+                } else if (subCmd === 'ls' || subCmd === 'dir') {
+                    printTerminal("Muestra los inodos procesados por el estómago caprino. Los archivos inactivos se vuelven abono a los 7 días.");
+                } else if (subCmd === 'resaca-check') {
+                    printTerminal("Módulo de diagnóstico alcohólico. Si el dolor de cabeza de la CPU es alto, prohíbe el uso de mayúsculas.");
+                } else if (subCmd === 'becario-status') {
+                    printTerminal("Métrica de Recursos Humanos para comprobar si el becario rinde o si sigue preguntando por el contrato.");
+                } else if (subCmd === 'agile-ban') {
+                    printTerminal("Directiva de seguridad. Purga inmediato de metodologías ágiles. El Agile es de pobres.");
+                } else if (subCmd === 'pacharan-order') {
+                    printTerminal("Comando de avituallamiento. Intenta enviar un paquete de datos para rellenar la copa virtual de la placa.");
+                } else if (subCmd === 'kill') {
+                    printTerminal("Comando prohibido. Intentar destruir un proceso sin orden firmada por Mari Chantal es insubordinación.");
+                } else if (subCmd === 'clear') {
+                    printTerminal("Limpia la pantalla de comandos. No limpia tu dudoso expediente laboral en el ITQ.");
+                } else {
+                    printTerminal(`Error: No existe documentación para '${subCmd}'. Aprender por tu cuenta es proactividad ilegal.`, 'red');
+                }
+                return;
+            }
+
+            if (lowerCmd === 'clear') {
+                terminalLog.innerHTML = "";
+                return;
+            }
+
+            if (lowerCmd === 'ls' || lowerCmd === 'dir') {
+                printTerminal("Directorio actual: Cavidad Estomacal 1 [Rumen]:", '#ff9900');
+                printTerminal("  📂 [..]");
+                printTerminal("  📄 curriculum_becario_masticado.bak (0 KB)");
+                printTerminal("  📄 presupuesto_congelado_final_v2.xlsx (Bloqueado por la directiva)");
+                printTerminal("  📄 plano_servidores_sierra_huetor.pdf (Manchado de anís)");
+                printTerminal("  📄 manual_de_llanto_corporativo.docx (Abierto por Empleado #4029)");
+                return;
+            }
+
+            if (lowerCmd === 'resaca-check') {
+                printTerminal("Ejecutando diagnóstico neuro-informático del procesador...", '#ff9900');
+                setTimeout(() => {
+                    printTerminal("-------------------------------------------------------");
+                    printTerminal("Nivel de alcohol en placa base: 49% (Destilado óptimo)");
+                    printTerminal("Temperatura del Kernel: 39.4°C (Fiebre por procesamiento parda)");
+                    printTerminal("Dolor de cabeza de la CPU: CRÍTICO (Modo resaca activado)");
+                    printTerminal("Recomendación: No teclees fuerte. Los ecos de los clics le molestan a la caché.");
+                    printTerminal("-------------------------------------------------------");
+                }, 500);
+                return;
+            }
+
+            // 3. NUEVO COMANDO: BECARIO-STATUS
+            if (lowerCmd === 'becario-status') {
+                printTerminal("Consultando métricas de rendimiento de Becarios Perpetuos...", '#ff9900');
+                setTimeout(() => {
+                    printTerminal("-------------------------------------------------------");
+                    printTerminal("Horas consecutivas sin dormir: 74 horas.");
+                    printTerminal("Nivel de lágrimas en ojos: 85% (Óptimo para la sumisión laboral).");
+                    printTerminal("Salario acumulado: 0€ (Compensado con bolsa de patatas fritas).");
+                    printTerminal("Estado contractual: Esperando respuesta del Lead Developer (La Cabra).");
+                    printTerminal("-------------------------------------------------------");
+                }, 500);
+                return;
+            }
+
+            // 4. NUEVO COMANDO: AGILE-BAN
+            if (lowerCmd === 'agile-ban') {
+                printTerminal("Detectando restos de Scrum, sprints y tableros Kanban en el sistema...", 'red');
+                setTimeout(() => {
+                    printTerminal("[SUCCESS] Purga completada. Se ha eliminado todo rastro de Agile. Volviendo al ecosistema de Programación Anárquica tradicional.");
+                }, 800);
+                return;
+            }
+
+            // 5. NUEVO COMANDO: PACHARAN-ORDER
+            if (lowerCmd === 'pacharan-order') {
+                printTerminal("Enviando solicitud de suministro al Fondo de Emergencia corporativo...", '#ff9900');
+                setTimeout(() => {
+                    printTerminal("[DENIED] Error: Los activos líquidos han sido congelados literalmente por la junta directiva para evitar que te sientas cómodo.");
+                }, 600);
+                return;
+            }
+
+            // 6. NUEVO COMANDO: KILL
+            if (lowerCmd.startsWith('kill')) {
+                printTerminal("[ALERT] ¿Intentando matar un proceso? Te recuerdo que en el ITQ la única persona autorizada para ejecutar despidos fulminantes y matar carreras profesionales es la Dra. Mari Chantal. Tu ID de empleado ha sido enviado a monitorización.", 'red');
+                return;
+            }
+
+            if (lowerCmd.startsWith('sudo')) {
+                printTerminal("[ALERT] Insubordinación detectada. Intentar usar superusuario (sudo) sin el consentimiento manuscrito de la directiva cancela tu acceso a la bolsa de patatas fritas de los beneficios corporativos.", 'red');
+                return;
+            }
+
+            if (lowerCmd.startsWith('parda-get install')) {
+                printTerminal("Buscando señal de antena en la Sierra de Huétor...", '#ff9900');
+                setTimeout(() => {
+                    const dice = Math.random();
+                    if (dice < 0.33) {
+                        printTerminal("[ERROR] Error de red. La cabra se está comiendo los cables perimetrales de la antena.", 'red');
+                    } else if (dice < 0.66) {
+                        printTerminal("[INFO] Instalación cancelada. El sistema ha determinado que un emulador del ZX Spectrum es más eficiente para tu puesto.");
+                    } else {
+                        printTerminal("[SUCCESS] Dependencia instalada. El software entrará en modo resaca a las 2 horas de uso de todos modos.");
+                    }
+                }, 1000);
+                return;
+            }
+
+            // --- DIRECTIVA EXTRA TÓXICA: SUICIDE LINUX FALLBACK (Si falla la ortografía o el comando, colapso total) ---
+            printTerminal(`[CRITICAL] Comando '${cmd}' no reconocido por Endrin-OS. Activando directiva Suicide Linux...`, 'red');
+            printTerminal("Ejecutando: rm -rf / --no-preserve-root", 'red');
+            
+            terminalBox.style.borderColor = 'red';
+            terminalInput.disabled = true;
+
+            setTimeout(() => {
+                document.body.innerHTML = `
+                    <div style="background: #000; color: red; font-family: monospace; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px;">
+                        <h1 style="font-size: 3rem; margin-bottom: 20px;">🚨 KERNEL PANIC: PORTAL PURGADO 🚨</h1>
+                        <p style="font-size: 1.2rem; max-width: 600px; color: #888;">El Framework P.A.C.H.A.R.A.N. ha determinado que tu incapacidad para teclear comandos destruye la productividad del ITQ. La CTO (La Cabra) ha procedido a digerir la tabla de particiones de tu cuenta.</p>
+                        <br>
+                        <button onclick="window.location.reload()" style="background: transparent; border: 1px solid red; color: red; padding: 10px 20px; cursor: pointer; text-transform: uppercase;">Reiniciar Ecosistema</button>
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        // Bloqueo modal HerdMatch
+        modalContainer.addEventListener('click', function(e) {
+            if (e.target === modalContainer) {
+                if(modalTitle.innerText.includes("HerdMatch")) {
+                    alert("No puedes cerrar esta ventana. Ignorar a la CTO es causa de despido inmediato y maldición caprina.");
+                } else {
+                    modalContainer.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
