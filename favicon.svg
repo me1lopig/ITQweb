@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b0029;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4a0015;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Fondo circular -->
+  <circle cx="50" cy="50" r="48" fill="url(#grad)"/>
+  
+  <!-- Orejas de cabra -->
+  <path d="M30,25 Q25,15 20,20 Q15,25 20,30 Q25,35 30,30 Z" fill="#000000"/>
+  <path d="M70,25 Q75,15 80,20 Q85,25 80,30 Q75,35 70,30 Z" fill="#000000"/>
+  
+  <!-- Cabeza de cabra estilizada -->
+  <ellipse cx="50" cy="40" rx="25" ry="20" fill="#000000"/>
+  
+  <!-- Ojos -->
+  <circle cx="40" cy="35" r="4" fill="#ffffff"/>
+  <circle cx="60" cy="35" r="4" fill="#ffffff"/>
+  <circle cx="40" cy="35" r="2" fill="#8b0029"/>
+  <circle cx="60" cy="35" r="2" fill="#8b0029"/>
+  
+  <!-- Nariz -->
+  <ellipse cx="50" cy="45" rx="3" ry="5" fill="#8b0029"/>
+  
+  <!-- Barba (detalle) -->
+  <path d="M45,50 Q50,55 55,50 Q50,60 45,50 Z" fill="#000000"/>
+  
+  <!-- Cuernos (opcional) -->
+  <path d="M35,20 Q30,10 25,15 Q20,20 25,25 Q30,30 35,25 Z" fill="#4a4a4a"/>
+  <path d="M65,20 Q70,10 75,15 Q80,20 75,25 Q70,30 65,25 Z" fill="#4a4a4a"/>
+</svg>
