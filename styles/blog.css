@@ -848,3 +848,76 @@ a:hover {
 .article-card:nth-child(4) { animation-delay: 0.4s; }
 .article-card:nth-child(5) { animation-delay: 0.5s; }
 .article-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* ITQ-404 Specific Styles */
+.itq-warning {
+    background: rgba(139, 0, 41, 0.15);
+    border-left: 4px solid var(--pacharan-red);
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 1rem;
+}
+
+.itq-warning strong {
+    color: var(--pacharan-red);
+}
+
+.itq-principle {
+    background: var(--bg-light-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.itq-principle h4 {
+    color: var(--pacharan-red);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.itq-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: 'Courier New', monospace;
+    background: var(--bg-light-card);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.itq-table th,
+.itq-table td {
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    text-align: left;
+}
+
+.itq-table th {
+    background: var(--bg-card);
+    color: var(--text-bright);
+    font-weight: 600;
+}
+
+.itq-table td {
+    color: var(--text-muted);
+}
+
+.itq-table tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.itq-signature {
+    text-align: right;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.itq-signature .signature {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 2rem;
+    color: var(--pacharan-red);
+    margin: 10px 0;
+}
