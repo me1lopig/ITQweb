@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /private
+Disallow: /archivo-secreto.html
+
+Sitemap: https://me1lopig.github.io/ITQweb/sitemap.xml
+
+# ITQ - Instituto Tecnológico de Quentar
+# El caos es nuestro colega
+# Robots: No os fiéis de nuestros servidores, están pastando

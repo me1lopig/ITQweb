@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generador de Excusas Corporativas del ITQ - Porque siempre necesitas una excusa">
+    <title>Generador de Excusas | ITQ - Instituto Tecnológico de Quentar</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .excuse-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            flex: 1;
+        }
+        
+        .excuse-hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .excuse-hero h1 {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 20px;
+            font-weight: 200;
+        }
+        
+        .excuse-hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .excuse-generator {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--pacharan-red);
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .excuse-output {
+            min-height: 100px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px dashed var(--border-light);
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .generate-excuse-btn {
+            background: var(--pacharan-red);
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            margin: 10px;
+        }
+        
+        .generate-excuse-btn:hover {
+            background: var(--hover-red);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(139, 0, 41, 0.5);
+        }
+        
+        .excuse-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .excuse-option {
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .excuse-option:hover {
+            border-color: var(--pacharan-red);
+            color: var(--pacharan-red);
+        }
+        
+        .excuse-option.active {
+            background: var(--pacharan-red);
+            color: #fff;
+            border-color: var(--pacharan-red);
+        }
+        
+        .excuse-history {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .excuse-history h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .history-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .history-list li {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: var(--bg-card);
+            border-left: 3px solid var(--pacharan-red);
+            border-radius: 4px;
+            color: var(--text-muted);
+            font-style: italic;
+            position: relative;
+        }
+        
+        .history-list li::before {
+            content: '"';
+            color: var(--pacharan-red);
+            font-size: 2rem;
+            position: absolute;
+            left: -10px;
+            top: -5px;
+            opacity: 0.5;
+        }
+        
+        .share-excuse {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .share-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s;
+            margin: 0 10px;
+        }
+        
+        .share-btn:hover {
+            border-color: var(--pacharan-red);
+            color: var(--pacharan-red);
+        }
+        
+        @media (max-width: 768px) {
+            .excuse-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .excuse-generator {
+                padding: 20px;
+            }
+            
+            .excuse-options {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="logo">ITQ <span>Quentar</span></a>
+        <nav>
+            <a href="../index.html#perspectiva">Perspectiva</a>
+            <a href="../index.html#fundadora">La Fundadora</a>
+            <a href="../index.html#carreras">Carreras</a>
+            <a href="../index.html#tecnologia">Tecnología</a>
+            <a href="../index.html#soluciones">Soluciones</a>
+            <a href="../index.html#contacto">Contacto</a>
+            <a href="index.html">Blog</a>
+            <a href="itq-404.html">ITQ-404</a>
+            <a href="excuses.html" class="active">Generador de Excusas</a>
+        </nav>
+        <button class="mobile-menu-btn" aria-label="Menú">☰</button>
+    </header>
+
+    <div class="excuse-container">
+        <div class="excuse-hero">
+            <h1>🎭 Generador de Excusas Corporativas</h1>
+            <p>¿Necesitas una excusa para justificar tu falta de productividad? <strong>El ITQ te cubre</strong>. Nuestro generador de excusas corporativas está entrenado con años de experiencia en <em>no hacer nada</em> y <em>culpar a otros</em>.</p>
+        </div>
+
+        <div class="excuse-generator" id="excuse-generator">
+            <h2>Genera tu Excusa</h2>
+            <p>Haz click en el botón y obtén una excusa profesional, creíble (o no) y 100% compatible con el caos corporativo.</p>
+            
+            <div class="excuse-output" id="excuse-output">
+                Haz click en el botón para generar una excusa...
+            </div>
+            
+            <button class="generate-excuse-btn" onclick="generateAndShowExcuse()">
+                ¡Necesito una Excusa!
+            </button>
+            
+            <div class="excuse-options">
+                <span class="excuse-option active" data-type="all" onclick="setExcuseType('all')">Todas</span>
+                <span class="excuse-option" data-type="tecnica" onclick="setExcuseType('tecnica')">Técnicas</span>
+                <span class="excuse-option" data-type="reunion" onclick="setExcuseType('reunion')">Reuniones</span>
+                <span class="excuse-option" data-type="personal" onclick="setExcuseType('personal')">Personales</span>
+            </div>
+        </div>
+
+        <div class="excuse-history">
+            <h3>📜 Historial de Excusas Generadas</h3>
+            <ul class="history-list" id="excuse-history"></ul>
+        </div>
+
+        <div class="share-excuse">
+            <p>¿Te gustó tu excusa? ¡Compártela con el mundo!</p>
+            <a href="#" class="share-btn" onclick="shareOnTwitter()">Compartir en Twitter</a>
+            <a href="#" class="share-btn" onclick="copyToClipboard()">Copiar al Portapapeles</a>
+        </div>
+    </div>
+
+    <footer>
+        <div>&copy; 2026 ITQ - Instituto Tecnológico de Quentar.</div>
+        <div>Diseñado bajo los efectos del endrino.</div>
+        <div><a href="../index.html">Volver al inicio</a></div>
+    </footer>
+
+    <script>
+        // Tipos de excusas
+        const excuseTypes = {
+            all: [
+                "El servidor está pastando. Volveré en 3 horas (o nunca).",
+                "Estoy en una reunión de Scrum con las cabras. No puedo atender ahora.",
+                "El código está en modo resaca. Necesita tiempo para recuperarse.",
+                "La base de datos se ha comido un balido. Estamos reiniciando.",
+                "El cliente no sabe lo que quiere. Estoy esperando que se decida.",
+                "Mi conexión a internet pasa por una cabra. Hay latencia.",
+                "Estoy documentando el código... en servilletas de bar.",
+                "El framework P.A.C.H.A.R.A.N. requiere pacharán para funcionar. Estoy reabasteciendo.",
+                "El becario ha borrado el repositorio. Estamos recuperando datos.",
+                "La Dra. Mari Chantal me ha asignado a un proyecto más importante: beber pacharán.",
+                "El sistema está optimizado para el caos. No es un bug, es una feature.",
+                "Estoy en modo focus: ignorando todos los mensajes.",
+                "El deploy falló porque el servidor está a lomos de una cabra que se durmió.",
+                "Estoy esperando a que el café haga efecto. O a que el pacharán lo haga.",
+                "El error 404 es en realidad el código de éxito en el ITQ."
+            ],
+            tecnica: [
+                "El servidor está pastando. Volveré en 3 horas (o nunca).",
+                "La base de datos se ha comido un balido. Estamos reiniciando.",
+                "Mi conexión a internet pasa por una cabra. Hay latencia.",
+                "El framework P.A.C.H.A.R.A.N. requiere pacharán para funcionar. Estoy reabasteciendo.",
+                "El deploy falló porque el servidor está a lomos de una cabra que se durmió.",
+                "El código está en modo resaca. Necesita tiempo para recuperarse.",
+                "Estoy depurando el código con una lupa. Es un proceso lento."
+            ],
+            reunion: [
+                "Estoy en una reunión de Scrum con las cabras. No puedo atender ahora.",
+                "El cliente no sabe lo que quiere. Estoy esperando que se decida.",
+                "Estoy en una reunión que no lleva a ningún lado. Como siempre.",
+                "La reunión se ha alargado porque alguien trajo pacharán.",
+                "Estoy en una videollamada donde todos tienen la cámara apagada. Incluido yo.",
+                "La reunión ha sido cancelada porque el organizador se olvido de enviar el enlace."
+            ],
+            personal: [
+                "Estoy documentando el código... en servilletas de bar.",
+                "El becario ha borrado el repositorio. Estamos recuperando datos.",
+                "La Dra. Mari Chantal me ha asignado a un proyecto más importante: beber pacharán.",
+                "Estoy en modo focus: ignorando todos los mensajes.",
+                "Estoy esperando a que el café haga efecto. O a que el pacharán lo haga.",
+                "Tengo resaca de ayer. No es un buen día para programar.",
+                "Estoy en una crisis existencial. Volveré cuando se me pase."
+            ]
+        };
+
+        let currentType = 'all';
+        let excuseHistory = [];
+
+        // Cargar historial del localStorage
+        if (localStorage.getItem('itq_excuse_history')) {
+            excuseHistory = JSON.parse(localStorage.getItem('itq_excuse_history'));
+            updateHistory();
+        }
+
+        function setExcuseType(type) {
+            currentType = type;
+            
+            // Actualizar clases activas
+            document.querySelectorAll('.excuse-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.dataset.type === type) {
+                    option.classList.add('active');
+                }
+            });
+        }
+
+        function generateExcuse() {
+            const excuses = excuseTypes[currentType] || excuseTypes.all;
+            return excuses[Math.floor(Math.random() * excuses.length)];
+        }
+
+        function generateAndShowExcuse() {
+            const excuse = generateExcuse();
+            document.getElementById('excuse-output').textContent = excuse;
+            
+            // Añadir al historial
+            excuseHistory.unshift({
+                text: excuse,
+                type: currentType,
+                date: new Date().toLocaleString('es-ES')
+            });
+            
+            // Limitar historial a 10
+            if (excuseHistory.length > 10) {
+                excuseHistory.pop();
+            }
+            
+            // Guardar en localStorage
+            localStorage.setItem('itq_excuse_history', JSON.stringify(excuseHistory));
+            
+            // Actualizar historial
+            updateHistory();
+            
+            // Contar para logros
+            const count = parseInt(localStorage.getItem('itq_excusas_count') || '0') + 1;
+            localStorage.setItem('itq_excusas_count', count);
+            
+            if (count >= 3) {
+                alert('🏆 ¡Logro Desbloqueado: Experto en Excusas!');
+            }
+        }
+
+        function updateHistory() {
+            const historyList = document.getElementById('excuse-history');
+            historyList.innerHTML = '';
+            
+            excuseHistory.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${item.text}</strong><br><small>${item.date}</small>`;
+                historyList.appendChild(li);
+            });
+        }
+
+        function shareOnTwitter() {
+            const excuse = document.getElementById('excuse-output').textContent;
+            const text = encodeURIComponent(`"${excuse}" - Generador de Excusas ITQ. Porque el caos es nuestro colega. #ITQ #ExcusasCorporativas`);
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+        }
+
+        function copyToClipboard() {
+            const excuse = document.getElementById('excuse-output').textContent;
+            navigator.clipboard.writeText(excuse).then(() => {
+                alert('✅ Excusa copiada al portapapeles. ¡Úsala con sabiduría!');
+            }).catch(() => {
+                alert('❌ No se pudo copiar. La cabra se comió el portapapeles.');
+            });
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            // Generar excusa inicial
+            generateAndShowExcuse();
+        });
+
+        // Mobile menu
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            const nav = document.querySelector('header nav');
+            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
+</body>
+</html>

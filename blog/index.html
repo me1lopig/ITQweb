@@ -4,9 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Blog satírico del ITQ: Noticias, guías y reflexiones sobre el caos corporativo, la tecnología inútil y el pacharán como combustible creativo.">
+    <meta name="keywords" content="ITQ, Quentar, blog, sátira, pacharán, caos corporativo, tecnología, metodologías ágiles">
+    
+    <!-- Open Graph / SEO -->
+    <meta property="og:title" content="Blog | ITQ - Instituto Tecnológico de Quentar">
+    <meta property="og:description" content="Noticias, guías y reflexiones sobre el caos corporativo, la tecnología inútil y el pacharán como combustible creativo.">
+    <meta property="og:image" content="https://me1lopig.github.io/ITQweb/fundadora.jpg">
+    <meta property="og:url" content="https://me1lopig.github.io/ITQweb/blog/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Blog ITQ - Instituto Tecnológico de Quentar">
+    <meta name="twitter:description" content="El blog más caótico sobre tecnología, metodologías inútiles y pacharán">
+    <meta name="twitter:image" content="https://me1lopig.github.io/ITQweb/fundadora.jpg">
+    
     <title>Blog | ITQ - Instituto Tecnológico de Quentar</title>
     <link rel="stylesheet" href="../styles/blog.css">
     <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <style>
+        /* Estilos adicionales para el blog */
+        .becario-section {
+            background: linear-gradient(135deg, #1a050d 0%, #0a0a0a 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 800px;
+        }
+        
+        .becario-section h2 {
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .becario-article {
+            background: var(--bg-card);
+            border-left: 4px solid var(--pacharan-red);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        
+        .becario-article h3 {
+            color: var(--text-bright);
+            margin-bottom: 10px;
+        }
+        
+        .becario-article .date {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .becario-article p {
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+        
+        .becario-nav {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .becario-nav a {
+            display: inline-block;
+            padding: 10px 30px;
+            background: var(--pacharan-red);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .becario-nav a:hover {
+            background: var(--hover-red);
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 768px) {
+            .becario-section {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="blog-header">
@@ -18,6 +99,9 @@
             <a href="../index.html#tecnologia">Tecnología</a>
             <a href="../index.html#soluciones">Soluciones</a>
             <a href="../index.html#contacto">Contacto</a>
+            <a href="../index.html#testimonios">Testimonios</a>
+            <a href="../index.html#casos-exito">Casos de Éxito</a>
+            <a href="../js/excuses.html">Generador de Excusas</a>
             <a href="index.html" class="active">Blog</a>
             <a href="itq-404.html">ITQ-404</a>
         </nav>
@@ -37,6 +121,7 @@
                 <a href="#tecnologia" class="category-tag">Tecnología</a>
                 <a href="#cultura" class="category-tag">Cultura ITQ</a>
                 <a href="#noticias" class="category-tag">Noticias Urgentes</a>
+                <a href="#becario" class="category-tag">El Rincón del Becario</a>
             </div>
         </div>
 
@@ -63,6 +148,86 @@
             <p>Actualizaciones importantes, como <strong>el código que se filtró y nadie entendió</strong>, <strong>la cabra que hackeó el servidor</strong> o <strong>el desarrollador que se ofendió y borró la documentación</strong>. Porque en el ITQ, las noticias son tan urgentes como incomprensibles.</p>
             <p><em>Última hora: El servidor de Analytics está pastando. Se recomienda no intentar acceder a él.</em></p>
         </section>
+
+        <section id="becario" class="section">
+            <h2>🧒 El Rincón del Becario 🧒</h2>
+            <p>Crónicas de un becario en el ITQ. <strong>Advertencia:</strong> Las experiencias aquí descritas pueden causar risas, lágrimas o la urgente necesidad de actualizar tu currículum.</p>
+            <p><em>"El primer día me dijeron que el código se escribe en ayunas. El segundo día, que los deploy se hacen los viernes a las 23:59. El tercer día... me asignaron a mantener el servidor que está a lomos de una cabra."</em></p>
+        </section>
+
+        <div class="becario-section">
+            <h2>📖 Diario de un Becario</h2>
+            
+            <div class="becario-article">
+                <h3>Día 1: El Primer Día</h3>
+                <span class="date">1 de Enero de 2026</span>
+                <p>Hoy es mi primer día en el ITQ. Me han dado un ordenador con Windows 95 ("para que no te distraigas con cosas modernas"), un botijo de pacharán ("para hidratarte") y una lista de tareas escrita en una servilleta.</p>
+                <p>Mi primer encargo: "Depura este código de COBOL". No sé COBOL. "No importa", me dicen, "tampoco nosotros".</p>
+                <p>Al final del día, he aprendido que en el ITQ hay tres reglas sagradas:</p>
+                <ol>
+                    <li>Si algo funciona, no lo toques.</li>
+                    <li>Si algo no funciona, culpa al becario anterior.</li>
+                    <li>Siempre hay pacharán en la nevera.</li>
+                </ol>
+            </div>
+            
+            <div class="becario-article">
+                <h3>Día 7: La Primera Reunión</h3>
+                <span class="date">7 de Enero de 2026</span>
+                <p>Hoy he asistido a mi primera reunión de equipo. Duró 3 horas. No se tomó ninguna decisión. Se habló mucho de "sinergias", "disrupción" y "pacharán".</p>
+                <p>El punto más importante del orden del día: "¿Dónde dejamos las llaves del servidor?". Respuesta: "En la mesita de al lado de la cabra".</p>
+                <p>He aprendido que en el ITQ, las reuniones no son para tomar decisiones, sino para <em>evitar</em> tomar decisiones.</p>
+            </div>
+            
+            <div class="becario-article">
+                <h3>Día 15: El Primer Bug</h3>
+                <span class="date">15 de Enero de 2026</span>
+                <p>Hoy he encontrado mi primer bug crítico. El sistema de facturación sumaba mal. Le comenté a mi supervisor que había que arreglarlo.</p>
+                <p>Su respuesta: "¿Y si no lo arreglamos? Así el cliente pagará más sin darse cuenta".</p>
+                <p>Me ha explicado que en el ITQ hay dos tipos de bugs:</p>
+                <ul>
+                    <li><strong>Bugs malos:</strong> Los que hacen que el sistema deje de funcionar.</li>
+                    <li><strong>Bugs buenos:</strong> Los que hacen que el sistema funcione <em>demasiado</em> bien (y por lo tanto, son sospechosos).</li>
+                </ul>
+                <p>El mío era un bug bueno. Lo hemos borrado.</p>
+            </div>
+            
+            <div class="becario-article">
+                <h3>Día 30: El Ascenso</h3>
+                <span class="date">30 de Enero de 2026</span>
+                <p>¡Hoy me han ascendido! Ahora soy "Responsable de Apagar el Servidor con el Pie". Mi salario ha aumentado en 50€ al mes, pero mi responsabilidad ha aumentado en un 200%.</p>
+                <p>Mi nueva oficina es el armario de la limpieza. Tiene mejor conexión a internet (el router está justo fuera).</p>
+                <p>La Dra. Mari Chantal me ha dado un consejo: "Si alguna vez te piden que hagas algo útil, di que estás en una reunión. Siempre funciona".</p>
+            </div>
+            
+            <div class="becario-article">
+                <h3>Día 45: La Crisis Existencial</h3>
+                <span class="date">14 de Febrero de 2026</span>
+                <p>Hoy he descubierto que el código que he estado manteniendo durante el último mes... no hace nada. Absolutamente nada. Es un bucle infinito que no afecta a ninguna parte del sistema.</p>
+                <p>Le he preguntado a mi supervisor por qué no lo borramos. Su respuesta: "Porque si lo borramos, alguien podría darse cuenta de que nunca ha hecho falta".</p>
+                <p>He tenido una crisis existencial. ¿Y si yo tampoco hago falta?</p>
+                <p>La Dra. Mari Chantal me ha tranquilizado: "Todos somos prescindibles, pero algunos somos más prescindibles que otros. Tú, por ahora, eres prescindible a un nivel aceptable".</p>
+            </div>
+            
+            <div class="becario-article">
+                <h3>Día 60: La Aceptación</h3>
+                <span class="date">1 de Marzo de 2026</span>
+                <p>Hoy he aceptado mi destino. Soy un becario perpetuo del ITQ. Mi trabajo no es desarrollar software, sino <em>sobrevivir</em> al desarrollo de software.</p>
+                <p>He aprendido a:</p>
+                <ul>
+                    <li>Decir "Estoy en ello" cuando me preguntan por algo que no entiendo.</li>
+                    <li>Decir "El servidor está pastando" cuando algo no funciona.</li>
+                    <li>Decir "Lo arreglaré en la próxima iteración" cuando no tengo intención de arreglarlo nunca.</li>
+                    <li>Beber pacharán sin que se note (aún no lo he conseguido).</li>
+                </ul>
+                <p>La Dra. Mari Chantal está orgullosa de mí. Me ha dicho que tengo "potencial para ser un auténtico saboteur corporativo".</p>
+                <p>Creo que es un cumplido.</p>
+            </div>
+            
+            <div class="becario-nav">
+                <a href="../index.html#carreras">¿Quieres ser el próximo becario? Únete al rebaño</a>
+            </div>
+        </div>
 
         <div class="featured-article">
             <h2>Artículo destacado</h2>
@@ -143,6 +308,10 @@
                         <h3>El Framework P.A.C.H.A.R.A.N. ahora es compatible con Excel</h3>
                         <p>Guía para migrar tu código a hojas de cálculo.</p>
                         <span class="read-more">Leer más →</span>
+                    </div>
+                </a>
+            </div>
+
             <div class="article-card">
                 <a href="itq-404.html">
                     <div class="article-card-content">
@@ -150,9 +319,6 @@
                         <h3>Instrucción ITQ-404: Código con Interacción Mínima del Usuario</h3>
                         <p>Normativa para implementar código que el usuario final no deba tocar, mirar o saber que existe.</p>
                         <span class="read-more">Leer más →</span>
-                    </div>
-                </a>
-            </div>
                     </div>
                 </a>
             </div>
@@ -174,5 +340,27 @@
         <div>Diseñado bajo los efectos del endrino.</div>
         <div><a href="../index.html">Volver al inicio</a></div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.blog-header .mobile-menu-btn').addEventListener('click', function() {
+            const nav = document.querySelector('.blog-header nav');
+            nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ITQ - Instituto Tecnológico de Quentar: Sinergias disruptivas, liderazgo ágil y desarrollo de software impulsado por la fermentación de endrinas.">
     <meta name="keywords" content="ITQ, Quentar, tecnología, sátira, pacharán, desarrollo software, metodologías ágiles, caos corporativo">
+    
+    <!-- Open Graph / SEO -->
+    <meta property="og:title" content="ITQ - Instituto Tecnológico de Quentar: El Caos es nuestro Colega™">
+    <meta property="og:description" content="Sinergias disruptivas, liderazgo ágil y desarrollo de software impulsado por la fermentación de endrinas. Bienvenido al abismo de la productividad corporativa.">
+    <meta property="og:image" content="https://me1lopig.github.io/ITQweb/fundadora.jpg">
+    <meta property="og:url" content="https://me1lopig.github.io/ITQweb/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ITQ - Instituto Tecnológico de Quentar">
+    <meta name="twitter:description" content="El Caos es nuestro Colega™ - Desarrollo de software impulsado por pacharán">
+    <meta name="twitter:image" content="https://me1lopig.github.io/ITQweb/fundadora.jpg">
+    
     <title>ITQ - Instituto Tecnológico de Quentar | Cofradía Tecnológica</title>
     <link rel="stylesheet" href="styles/main.css">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -20,6 +32,9 @@
             <a href="#tecnologia">Tecnología</a>
             <a href="#soluciones">Soluciones</a>
             <a href="#blog">Blog</a>
+            <a href="#testimonios">Testimonios</a>
+            <a href="#casos-exito">Casos de Éxito</a>
+            <a href="js/excuses.html">Generador de Excusas</a>
             <a href="blog/itq-404.html">ITQ-404</a>
             <a href="#contacto">Contacto</a>
         </nav>
@@ -32,11 +47,12 @@
         <div class="hero-buttons">
             <a href="#soluciones" class="btn">Explorar el Abismo</a>
             <a href="blog/" class="btn btn-outline">Visitar el Blog</a>
+            <button class="btn no-click-btn" id="no-click-btn">NO HACER CLICK</button>
         </div>
     </section>
 
     <section id="perspectiva" class="section">
-        <h2 class="section-title">─ Perspectiva ─</h2>
+        <h2 class="section-title">☰ Perspectiva ☰</h2>
         <div class="grid-2">
             <div class="col">
                 <p>El mundo ha estado en modo de generación masiva de datos durante las últimas décadas. ¿Cómo darle sentido a esta información cuando no hay suficientes ojos para examinarla? En el Instituto Tecnológico de Quentar reconocemos que la mejor solución a la sobreinformación es, simplemente, <strong>ignorarla e introducir caos sistémico</strong>.</p>
@@ -51,7 +67,7 @@
     </section>
 
     <section id="fundadora" class="section" style="background-color: var(--bg-darker);">
-        <h2 class="section-title">─ Liderazgo Ágil: La Fundadora ─</h2>
+        <h2 class="section-title">☰ Liderazgo Ágil: La Fundadora ☰</h2>
         <div class="grid-2">
             <div class="col" style="text-align: center;">
                 <img src="fundadora.jpg" alt="Dra. Mari Chantal, CEO ITQ - Chief Visionary Dictator & Arquitecta del Caos" class="founder-img">
@@ -94,7 +110,7 @@
     </section>
 
     <section id="carreras" class="section">
-        <h2 class="section-title">─ Carreras (Únete al Rebaño) ─</h2>
+        <h2 class="section-title">☰ Carreras (Únete al Rebaño) ☰</h2>
         <h3 style="font-size: 2.5rem; margin-bottom: 20px;">Buscamos Becarios Perpetuos</h3>
         <p style="max-width: 800px; margin: 0 auto 40px auto; color: var(--text-muted);">En el ITQ no creemos en las "etapas profesionales". Creemos en la perpetuidad. Aquí no eres un recurso humano de paso; eres una constante universal, como el olor a anís en la oficina.</p>
         
@@ -117,7 +133,7 @@
     </section>
 
     <section id="tecnologia" class="section">
-        <h2 class="section-title">─ Tecnología & I+D+i ─</h2>
+        <h2 class="section-title">☰ Tecnología & I+D+i ☰</h2>
         <div class="grid-2">
             <div class="col" style="text-align: center; background: var(--bg-card); padding: 30px; border-radius: 8px; border-bottom: 3px solid var(--pacharan-red);">
                 <h3 style="color: #fff; font-size: 1.8rem; margin-bottom: 15px;">Framework P.A.C.H.A.R.A.N.</h3>
@@ -146,7 +162,7 @@
     </section>
 
     <section id="soluciones" class="section" style="background-color: var(--bg-darker);">
-        <h2 class="section-title">─ Soluciones Corporativas ─</h2>
+        <h2 class="section-title">☰ Soluciones Corporativas ☰</h2>
         <div class="grid-3">
             <div class="card">
                 <h3>Enterprise Analytics</h3>
@@ -161,14 +177,178 @@
             <div class="card">
                 <h3>Consultoría Mari Chantal</h3>
                 <p>Auditorías tecnológicas. Si tu sistema funciona entonces el factor humano no interviene, eso te lo arregla la jefa.</p>
-                <p>Auditorías extremas de Recursos Humanos. Te diremos a la cara que un botijo haría mejor tu trabajo. Facturación por horas de llanto.</p>
+                <p>Auditorías extremas de Recursos Humanos. Te diremos a la cara que un botijo hará mejor tu trabajo. Facturación por horas de llanto.</p>
                 <a class="card-link" onclick="alert('Mari Chantal está ocupada ignorando tus quejas.')">Reservar Cita</a>
             </div>
         </div>
     </section>
 
-        <section id="blog" class="section">
-        <h2 class="section-title">─ Blog ITQ ─</h2>
+    <section id="testimonios" class="section testimonios-section">
+        <h2 class="section-title">☰ Testimonios de Clientes ☰</h2>
+        <p style="max-width: 800px; margin: 0 auto 40px auto; color: var(--text-muted);">
+            No nos creas a nosotros. Escucha lo que nuestros <em>clientes satisfechos</em> (o no) tienen que decir sobre nuestros servicios. 
+            <strong>Advertencia:</strong> Algunos testimonios pueden contener trazas de ironía y pacharán.
+        </p>
+        
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">Gracias al Framework P.A.C.H.A.R.A.N., nuestros servidores ahora tardan 47 segundos en responder. ¡La productividad ha caído un 200%! Finalmente tenemos tiempo para lo que realmente importa: beber pacharán.</p>
+                <div class="testimonial-author">
+                    <img src="https://via.placeholder.com/50x50/8b0029/ffffff?text=JC" alt="Juan Carlos">
+                    <div class="testimonial-author-info">
+                        <h4>Juan Carlos</h4>
+                        <p>CTO, Empresas Quebradas S.A.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text">La migración a Cloud Caprino fue la mejor decisión que tomamos. Ahora nuestros datos están seguros... a menos que una cabra decida masticarlos. El soporte técnico es excelente: cuando llamas, siempre te dicen que la cabra está dormida.</p>
+                <div class="testimonial-author">
+                    <img src="https://via.placeholder.com/50x50/8b0029/ffffff?text=AM" alt="Ana Martínez">
+                    <div class="testimonial-author-info">
+                        <h4>Ana Martínez</h4>
+                        <p>Directora de Innovación, TechNoSéQué S.L.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text">El Endrin-OS ha revolucionado nuestra empresa. Los empleados ahora pasan más tiempo reiniciando sus ordenadores que trabajando. ¡La eficiencia nunca había sido tan baja! Y lo mejor: nadie se queja porque todos están demasiado borrachos para darse cuenta.</p>
+                <div class="testimonial-author">
+                    <img src="https://via.placeholder.com/50x50/8b0029/ffffff?text=PL" alt="Pedro López">
+                    <div class="testimonial-author-info">
+                        <h4>Pedro López</h4>
+                        <p>CEO, Startup del Año (2015)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text">La consultoría de la Dra. Mari Chantal nos salvó. Antes teníamos problemas normales. Ahora tenemos problemas épicos, dignos de ser contados en el bar. El ROI es incalculable... al igual que nuestro presupuesto de pacharán.</p>
+                <div class="testimonial-author">
+                    <img src="https://via.placeholder.com/50x50/8b0029/ffffff?text=LR" alt="Laura Rodríguez">
+                    <div class="testimonial-author-info">
+                        <h4>Laura Rodríguez</h4>
+                        <p>Jefa de Proyectos, Caos Corporativo S.A.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text">Contratar al ITQ fue la peor decisión de mi vida profesional. Pero también la más entretenida. Nunca sabes si el servidor está caído o si simplemente la cabra está pastando. ¡10/10, volvería a contratarles (o no)!</p>
+                <div class="testimonial-author">
+                    <img src="https://via.placeholder.com/50x50/8b0029/ffffff?text=MG" alt="Miguel García">
+                    <div class="testimonial-author-info">
+                        <h4>Miguel García</h4>
+                        <p>Ex-Director de TI, Empresa en Quiebra</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text">El Goat-GPT me dijo que mi código era basura. Al principio me ofendí, pero luego me di cuenta de que tenía razón. Ahora lo consulto antes de cada commit. Es más honesto que mi jefe.</p>
+                <div class="testimonial-author">
+                    <img src="https://via.placeholder.com/50x50/8b0029/ffffff?text=DS" alt="David Sánchez">
+                    <div class="testimonial-author-info">
+                        <h4>David Sánchez</h4>
+                        <p>Desarrollador Junior, Siempre en Pruebas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="casos-exito" class="section casos-exito-section">
+        <h2 class="section-title">☰ Casos de Éxito (Fracasos Épicos) ☰</h2>
+        <p style="max-width: 800px; margin: 0 auto 40px auto; color: var(--text-muted);">
+            En el ITQ, el fracaso no es una opción... es una <em>garantía</em>. Aquí te presentamos nuestros casos de éxito más memorables, 
+            donde el caos se convirtió en arte y la ineficiencia en modelo de negocio.
+        </p>
+        
+        <div class="casos-grid">
+            <div class="caso-card">
+                <h3>Migración a Cloud Caprino</h3>
+                <div class="caso-meta">
+                    <span>📅 2023</span>
+                    <span>💰 Presupuesto: 50.000€</span>
+                    <span class="status-fail">❌ Resultado: Épico</span>
+                </div>
+                <p>El cliente quería migrar su infraestructura a la nube. Nosotros le ofrecimos migrar a <strong>nuestra</strong> nube: cabras pastando en la Sierra de Huétor. El proyecto tardó 6 meses más de lo previsto, el presupuesto se multiplicó por 3, y al final... ¡el cliente descubrió que prefería sus servidores locales!</p>
+                <div class="lesson">
+                    Lección aprendida: Las cabras no son el mejor entorno para bases de datos, pero son excelentes para justificar delays en los proyectos.
+                </div>
+            </div>
+            
+            <div class="caso-card">
+                <h3>Implementación de Blockchain</h3>
+                <div class="caso-meta">
+                    <span>📅 2022</span>
+                    <span>💰 Presupuesto: 120.000€</span>
+                    <span class="status-fail">❌ Resultado: Legendario</span>
+                </div>
+                <p>El cliente insistía en que necesitaba Blockchain. Le implementamos un sistema basado en nuestro Framework P.A.C.H.A.R.A.N. con almacenamiento en hojas de Excel. Al final, el cliente se dio cuenta de que no necesitaba Blockchain... pero para entonces ya habíamos gastado todo el presupuesto en pacharán.</p>
+                <div class="lesson">
+                    Lección aprendida: Blockchain es como el pacharán: todo el mundo habla de ello, pero nadie sabe realmente para qué sirve.
+                </div>
+            </div>
+            
+            <div class="caso-card">
+                <h3>Reingeniería de Procesos</h3>
+                <div class="caso-meta">
+                    <span>📅 2021</span>
+                    <span>💰 Presupuesto: 80.000€</span>
+                    <span class="status-fail">❌ Resultado: Catastrófico</span>
+                </div>
+                <p>El objetivo era optimizar los procesos del cliente. Nuestro enfoque: añadir más pasos, más burocracia y más reuniones. Al final, los procesos eran tan ineficientes que el cliente tuvo que contratar a 10 personas más solo para mantener el ritmo. ¡Misión cumplida!</p>
+                <div class="lesson">
+                    Lección aprendida: La optimización a veces significa hacer las cosas más lentas... pero con más estilo.
+                </div>
+            </div>
+            
+            <div class="caso-card">
+                <h3>Desarrollo de Endrin-OS 2.0</h3>
+                <div class="caso-meta">
+                    <span>📅 2024</span>
+                    <span>💰 Presupuesto: Desconocido</span>
+                    <span class="status-success">✅ Resultado: Éxito Relativo</span>
+                </div>
+                <p>Lanzamos la nueva versión de nuestro sistema operativo estrella. Ahora con 30% más latencia, 100% más resaca y la capacidad de reiniciarse automáticamente cuando detecta que el usuario está sobrio. Los usuarios reportan que es "el sistema operativo más realista que han usado".</p>
+                <div class="lesson">
+                    Lección aprendida: En el ITQ, los bugs no son errores... son features que aún no han sido descubiertas.
+                </div>
+            </div>
+            
+            <div class="caso-card">
+                <h3>Auditoría de Seguridad</h3>
+                <div class="caso-meta">
+                    <span>📅 2023</span>
+                    <span>💰 Presupuesto: 25.000€</span>
+                    <span class="status-fail">❌ Resultado: Revelador</span>
+                </div>
+                <p>El cliente nos contrató para auditar la seguridad de sus sistemas. Descubrimos que su firewall era una cabra atada a un poste. Le recomendamos actualizar a nuestro Cloud Caprino. El cliente se ahorró 20.000€... que luego gastó en pacharán para celebrar.</p>
+                <div class="lesson">
+                    Lección aprendida: A veces la mejor seguridad es que nadie entienda cómo funciona tu sistema.
+                </div>
+            </div>
+            
+            <div class="caso-card">
+                <h3>Formación en Metodologías Ágiles</h3>
+                <div class="caso-meta">
+                    <span>📅 2022</span>
+                    <span>💰 Presupuesto: 15.000€</span>
+                    <span class="status-fail">❌ Resultado: Iluminador</span>
+                </div>
+                <p>Impartimos un curso de Scrum y metodologías ágiles a 50 empleados. Al final del curso, los empleados entendieron que el verdadero objetivo del ágil es <strong>hacer que el jefe deje de molestar</strong>. La productividad bajó un 40%, pero la satisfacción laboral aumentó un 200%.</p>
+                <div class="lesson">
+                    Lección aprendida: El ágil no es una metodología de trabajo... es una filosofía de vida (y de evitar reuniones).
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="blog" class="section">
+        <h2 class="section-title">☰ Blog ITQ ☰</h2>
         <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; font-size: 1.1rem; color: var(--text-muted);">
             Noticias, guías y reflexiones sobre el caos corporativo, la tecnología inútil y el pacharán como combustible creativo.
         </p>
@@ -235,8 +415,9 @@
             <a href="blog/" class="btn">Ver todos los artículos</a>
         </div>
     </section>
+    
     <section class="section">
-        <h2 class="section-title" style="text-align: center; color: var(--pacharan-red); letter-spacing: 4px; text-transform: uppercase;">─ Ecosistema P.A.C.H.A.R.A.N. ─</h2>
+        <h2 class="section-title" style="text-align: center; color: var(--pacharan-red); letter-spacing: 4px; text-transform: uppercase;">☰ Ecosistema P.A.C.H.A.R.A.N. ☰</h2>
         
         <div style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-top: 4px solid var(--pacharan-red); padding: 50px; margin-top: 40px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
             <h3 style="font-size: 2.5rem; color: #fff; margin-bottom: 20px;">Goat-GPT <span style="font-size: 1rem; color: var(--pacharan-red); vertical-align: super;">ENTERPRISE</span></h3>
@@ -255,8 +436,19 @@
         </div>
     </section>
 
+    <section id="shame-wall" class="section shame-wall-section">
+        <h2 class="section-title">☰ Muro de la Vergüenza ☰</h2>
+        <p style="max-width: 800px; margin: 0 auto 40px auto; color: var(--text-muted);">
+            Commits recientes de nuestro repositorio. Porque en el ITQ, hasta el control de versiones es caótico.
+        </p>
+        
+        <div class="shame-wall-card" id="shame-wall">
+            <!-- Se llenará con JavaScript -->
+        </div>
+    </section>
+
     <section id="contacto" class="section">
-        <h2 class="section-title">─ Contacto ─</h2>
+        <h2 class="section-title">☰ Contacto ☰</h2>
         <h3 style="font-size: 2rem; margin-bottom: 20px;">¿Quieres desestructurar tu empresa? Hablemos.</h3>
         <p style="color: var(--text-muted); margin-bottom: 20px;">La comunicación corporativa se realiza exclusivamente a través de frecuencias caprinas o frecuencias alcohólicas.</p>
         
@@ -269,13 +461,22 @@
         <div>&copy; 2026 ITQ - Instituto Tecnológico de Quentar.</div>
         <div>Diseñado bajo los efectos del endrino.</div>
         <div><a href="blog/">Blog</a></div>
+        <div><a href="sitemap.xml">Mapa del Sitio</a></div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
     <script>
         // Mobile menu toggle
         document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
             const nav = document.querySelector('header nav');
             nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+            
+            // Efecto de balido al abrir menú móvil
+            if (nav.style.display === 'flex') {
+                const audio = new Audio('balido.mp3');
+                audio.play().catch(e => {});
+            }
         });
 
         // Balido button
@@ -302,6 +503,19 @@
                     });
                 }
             });
+        });
+
+        // Inicializar funcionalidades adicionales
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar el muro de la vergüenza
+            if (typeof initShameWall === 'function') {
+                initShameWall();
+            }
+            
+            // Inicializar el generador de excusas (si está en la página)
+            if (typeof initExcuseGenerator === 'function') {
+                initExcuseGenerator();
+            }
         });
     </script>
 
