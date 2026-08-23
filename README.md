@@ -2,7 +2,7 @@
 
 > **Web satírica inspirada en el canal de YouTube [ITQuentar](https://www.youtube.com/@ITQuentar/videos)**
 
-Una parodia del mundo de la tecnología, la consultoría corporativa y las metodologías ágiles, con un toque de humor andaluz, mucho pacharán y un enfoque único en el **caos corporativo como modelo de negocio**.
+Una parodia del mundo de la tecnología, la consultoría corporativa y las metodologías ágiles, con un toque de humor, mucho pacharán y un enfoque único en el **caos corporativo como modelo de negocio**.
 
 ---
 
